@@ -6,7 +6,7 @@ const { DATABASE_URL } = await load();
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: DATABASE_URL,
+      url: DATABASE_URL.toString(),
     },
   },
 });
