@@ -2,11 +2,11 @@ import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
 import { Application, Router } from "https://deno.land/x/oak@v12.0.0/mod.ts";
 import { PrismaClient } from "./generated/client/deno/edge.ts";
 
-console.log(await load());
+const { DATABASE_URL } = await load();
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: Deno.env.get("DATABASE_URL"),
+      url: DATABASE_URL,
     },
   },
 });
