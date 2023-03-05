@@ -4,11 +4,7 @@ import { PrismaClient } from "./generated/client/deno/edge.ts";
 
 const { DATABASE_URL } = await load();
 const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: DATABASE_URL,
-    },
-  },
+  datasources: {db: { url: DATABASE_URL } }
 });
 
 const app = new Application();
