@@ -1,10 +1,15 @@
-import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
+// import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
 import { Application, Router } from "https://deno.land/x/oak@v12.0.0/mod.ts";
 import { PrismaClient } from "./generated/client/deno/edge.ts";
 
-const { DATABASE_URL } = await load();
+// const { DATABASE_URL } = await load();
 const prisma = new PrismaClient({
-  datasources: {db: { url: DATABASE_URL } }
+  datasources: {
+    db: {
+      url:
+        "prisma://aws-us-east-1.prisma-data.com/?api_key=qYLCjjAjryYgRejOuvCudVL9MlXXiPx49NlkD9Wy9i-1AKn5yu0xWR2n0Qc89Qln",
+    },
+  },
 });
 
 const app = new Application();
