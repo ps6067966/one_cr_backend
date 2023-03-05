@@ -1,12 +1,12 @@
-import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
+import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
 import { Prisma, PrismaClient } from "../generated/client/deno/edge.ts";
 
-const envVars = config();
+const { DATABASE_URL } = await load();
 
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: envVars.DATABASE_URL,
+      url: DATABASE_URL,
     },
   },
 });
