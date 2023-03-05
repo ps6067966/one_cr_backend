@@ -5,5 +5,7 @@
   "editor.defaultFormatter": "denoland.vscode-deno",
   "deno.inlayHints.functionLikeReturnTypes.enabled": true,
   "deno.inlayHints.parameterNames.enabled": "all",
-  "deno.inlayHints.variableTypes.enabled": true
+  "deno.inlayHints.variableTypes.enabled": true,
+  "deno.inlayHints.parameterTypes.enabled": true,
+  "deno.inlayHints.propertyDeclarationTypes.enabled": true
 }
