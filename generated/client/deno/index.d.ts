@@ -804,48 +804,6 @@ export namespace Prisma {
    */
 
 
-  /**
-   * Count Type UserCountOutputType
-   */
-
-
-  export type UserCountOutputType = {
-    bank_details: number
-  }
-
-  export type UserCountOutputTypeSelect = {
-    bank_details?: boolean
-  }
-
-  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UserCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (UserCountOutputTypeArgs)
-    ? UserCountOutputType 
-    : S extends { select: any } & (UserCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
-  } 
-      : UserCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the UserCountOutputType
-     */
-    select?: UserCountOutputTypeSelect | null
-  }
-
-
 
   /**
    * Models
@@ -1059,14 +1017,12 @@ export namespace Prisma {
     email?: boolean
     photo_url?: boolean
     mobile_number?: boolean
-    bank_details?: boolean | User$bank_detailsArgs
-    _count?: boolean | UserCountOutputTypeArgs
+    bank_details?: boolean | BankAccountDetailsArgs
   }
 
 
   export type UserInclude = {
-    bank_details?: boolean | User$bank_detailsArgs
-    _count?: boolean | UserCountOutputTypeArgs
+    bank_details?: boolean | BankAccountDetailsArgs
   }
 
   export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
@@ -1076,14 +1032,12 @@ export namespace Prisma {
     S extends { include: any } & (UserArgs | UserFindManyArgs)
     ? User  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'bank_details' ? Array < BankAccountDetailsGetPayload<S['include'][P]>>  :
-        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'bank_details' ? BankAccountDetailsGetPayload<S['include'][P]> | null :  never
   } 
     : S extends { select: any } & (UserArgs | UserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'bank_details' ? Array < BankAccountDetailsGetPayload<S['select'][P]>>  :
-        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
+        P extends 'bank_details' ? BankAccountDetailsGetPayload<S['select'][P]> | null :  P extends keyof User ? User[P] : never
   } 
       : User
 
@@ -1455,7 +1409,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    bank_details<T extends User$bank_detailsArgs= {}>(args?: Subset<T, User$bank_detailsArgs>): Prisma.PrismaPromise<Array<BankAccountDetailsGetPayload<T>>| Null>;
+    bank_details<T extends BankAccountDetailsArgs= {}>(args?: Subset<T, BankAccountDetailsArgs>): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -1809,27 +1763,6 @@ export namespace Prisma {
      * Filter which Users to delete
      */
     where?: UserWhereInput
-  }
-
-
-  /**
-   * User.bank_details
-   */
-  export type User$bank_detailsArgs = {
-    /**
-     * Select specific fields to fetch from the BankAccountDetails
-     */
-    select?: BankAccountDetailsSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BankAccountDetailsInclude | null
-    where?: BankAccountDetailsWhereInput
-    orderBy?: Enumerable<BankAccountDetailsOrderByWithRelationInput>
-    cursor?: BankAccountDetailsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<BankAccountDetailsScalarFieldEnum>
   }
 
 
@@ -2898,7 +2831,7 @@ export namespace Prisma {
     email?: StringFilter | string
     photo_url?: StringFilter | string
     mobile_number?: StringFilter | string
-    bank_details?: BankAccountDetailsListRelationFilter
+    bank_details?: XOR<BankAccountDetailsRelationFilter, BankAccountDetailsWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -2908,7 +2841,7 @@ export namespace Prisma {
     email?: SortOrder
     photo_url?: SortOrder
     mobile_number?: SortOrder
-    bank_details?: BankAccountDetailsOrderByRelationAggregateInput
+    bank_details?: BankAccountDetailsOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = {
@@ -2968,6 +2901,7 @@ export namespace Prisma {
 
   export type BankAccountDetailsWhereUniqueInput = {
     id?: number
+    user_id?: number
     email?: string
   }
 
@@ -3003,7 +2937,7 @@ export namespace Prisma {
     email: string
     photo_url: string
     mobile_number: string
-    bank_details?: BankAccountDetailsCreateNestedManyWithoutUserInput
+    bank_details?: BankAccountDetailsCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3013,7 +2947,7 @@ export namespace Prisma {
     email: string
     photo_url: string
     mobile_number: string
-    bank_details?: BankAccountDetailsUncheckedCreateNestedManyWithoutUserInput
+    bank_details?: BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3022,7 +2956,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
-    bank_details?: BankAccountDetailsUpdateManyWithoutUserNestedInput
+    bank_details?: BankAccountDetailsUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3032,7 +2966,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
-    bank_details?: BankAccountDetailsUncheckedUpdateManyWithoutUserNestedInput
+    bank_details?: BankAccountDetailsUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3146,14 +3080,9 @@ export namespace Prisma {
     not?: NestedStringFilter | string
   }
 
-  export type BankAccountDetailsListRelationFilter = {
-    every?: BankAccountDetailsWhereInput
-    some?: BankAccountDetailsWhereInput
-    none?: BankAccountDetailsWhereInput
-  }
-
-  export type BankAccountDetailsOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type BankAccountDetailsRelationFilter = {
+    is?: BankAccountDetailsWhereInput | null
+    isNot?: BankAccountDetailsWhereInput | null
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -3267,36 +3196,30 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type BankAccountDetailsCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
-    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
-    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+  export type BankAccountDetailsCreateNestedOneWithoutUserInput = {
+    create?: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BankAccountDetailsCreateOrConnectWithoutUserInput
+    connect?: BankAccountDetailsWhereUniqueInput
   }
 
-  export type BankAccountDetailsUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
-    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
-    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+  export type BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BankAccountDetailsCreateOrConnectWithoutUserInput
+    connect?: BankAccountDetailsWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type BankAccountDetailsUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<BankAccountDetailsUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
-    set?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    disconnect?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    delete?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    update?: Enumerable<BankAccountDetailsUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<BankAccountDetailsUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<BankAccountDetailsScalarWhereInput>
+  export type BankAccountDetailsUpdateOneWithoutUserNestedInput = {
+    create?: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BankAccountDetailsCreateOrConnectWithoutUserInput
+    upsert?: BankAccountDetailsUpsertWithoutUserInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: BankAccountDetailsWhereUniqueInput
+    update?: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3307,18 +3230,14 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type BankAccountDetailsUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<BankAccountDetailsUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
-    set?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    disconnect?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    delete?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
-    update?: Enumerable<BankAccountDetailsUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<BankAccountDetailsUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<BankAccountDetailsScalarWhereInput>
+  export type BankAccountDetailsUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BankAccountDetailsCreateOrConnectWithoutUserInput
+    upsert?: BankAccountDetailsUpsertWithoutUserInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: BankAccountDetailsWhereUniqueInput
+    update?: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
   }
 
   export type UserCreateNestedOneWithoutBank_detailsInput = {
@@ -3424,37 +3343,24 @@ export namespace Prisma {
     create: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
   }
 
-  export type BankAccountDetailsCreateManyUserInputEnvelope = {
-    data: Enumerable<BankAccountDetailsCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type BankAccountDetailsUpsertWithWhereUniqueWithoutUserInput = {
-    where: BankAccountDetailsWhereUniqueInput
+  export type BankAccountDetailsUpsertWithoutUserInput = {
     update: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
     create: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
   }
 
-  export type BankAccountDetailsUpdateWithWhereUniqueWithoutUserInput = {
-    where: BankAccountDetailsWhereUniqueInput
-    data: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
+  export type BankAccountDetailsUpdateWithoutUserInput = {
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BankAccountDetailsUpdateManyWithWhereWithoutUserInput = {
-    where: BankAccountDetailsScalarWhereInput
-    data: XOR<BankAccountDetailsUpdateManyMutationInput, BankAccountDetailsUncheckedUpdateManyWithoutBank_detailsInput>
-  }
-
-  export type BankAccountDetailsScalarWhereInput = {
-    AND?: Enumerable<BankAccountDetailsScalarWhereInput>
-    OR?: Enumerable<BankAccountDetailsScalarWhereInput>
-    NOT?: Enumerable<BankAccountDetailsScalarWhereInput>
-    id?: IntFilter | number
-    user_id?: IntFilter | number
-    full_name?: StringFilter | string
-    email?: StringFilter | string
-    upi_id?: StringFilter | string
-    paytm_number?: StringFilter | string
+  export type BankAccountDetailsUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateWithoutBank_detailsInput = {
@@ -3499,37 +3405,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type BankAccountDetailsCreateManyUserInput = {
-    id?: number
-    full_name: string
-    email: string
-    upi_id: string
-    paytm_number: string
-  }
-
-  export type BankAccountDetailsUpdateWithoutUserInput = {
-    full_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    upi_id?: StringFieldUpdateOperationsInput | string
-    paytm_number?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type BankAccountDetailsUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    full_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    upi_id?: StringFieldUpdateOperationsInput | string
-    paytm_number?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type BankAccountDetailsUncheckedUpdateManyWithoutBank_detailsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    full_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    upi_id?: StringFieldUpdateOperationsInput | string
-    paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
 

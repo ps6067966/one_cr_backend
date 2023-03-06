@@ -19,13 +19,13 @@ model User {
   email     String   @unique
   photo_url  String 
   mobile_number String
-  bank_details        BankAccountDetails[]
+  bank_details        BankAccountDetails?
 }
 
 model BankAccountDetails {
   id        Int      @id @default(autoincrement())
-  user     User      @relation(fields: [user_id], references: [id])
-  user_id  Int
+  user     User     @relation(fields: [user_id], references: [id])
+  user_id   Int    @unique
   full_name      String
   email     String   @unique
   upi_id  String 

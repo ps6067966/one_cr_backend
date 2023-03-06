@@ -9,12 +9,24 @@ const prisma = new PrismaClient({
   },
 });
 
+const bank_details: Prisma.BankAccountDetailsCreateInput[] = [
+  {
+    full_name: "Dummy User",
+    email: "ps6067966@gmail.com",
+    paytm_number: "1234567890",
+    upi_id: "dummy@upi",
+    user: { connect: { id: 1 } },
+  },
+];
+
 const usersData: Prisma.UserCreateInput[] = [
   {
     full_name: "Dummy User",
     photo_url: "https://dummyimage.com/600x400/000/fff",
     user_name: "dummy",
     email: "ps6067966@gmail.com",
+    mobile_number: "1234567890",
+    bank_details: { create: bank_details[0] },
   },
 ];
 
