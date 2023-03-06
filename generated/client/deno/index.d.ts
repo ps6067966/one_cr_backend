@@ -16,8 +16,10 @@ type UnwrapTuple<Tuple extends readonly unknown[]> = {
  */
 export type User = {
   id: number
+  user_name: string
+  fullName: string
   email: string
-  name: string | null
+  photo_url: string
 }
 
 
@@ -805,20 +807,26 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: number | null
+    user_name: string | null
+    fullName: string | null
     email: string | null
-    name: string | null
+    photo_url: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: number | null
+    user_name: string | null
+    fullName: string | null
     email: string | null
-    name: string | null
+    photo_url: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
+    user_name: number
+    fullName: number
     email: number
-    name: number
+    photo_url: number
     _all: number
   }
 
@@ -833,20 +841,26 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
+    user_name?: true
+    fullName?: true
     email?: true
-    name?: true
+    photo_url?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
+    user_name?: true
+    fullName?: true
     email?: true
-    name?: true
+    photo_url?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
+    user_name?: true
+    fullName?: true
     email?: true
-    name?: true
+    photo_url?: true
     _all?: true
   }
 
@@ -939,8 +953,10 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: number
+    user_name: string
+    fullName: string
     email: string
-    name: string | null
+    photo_url: string
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -964,8 +980,10 @@ export namespace Prisma {
 
   export type UserSelect = {
     id?: boolean
+    user_name?: boolean
+    fullName?: boolean
     email?: boolean
-    name?: boolean
+    photo_url?: boolean
   }
 
 
@@ -1717,8 +1735,10 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
+    user_name: 'user_name',
+    fullName: 'fullName',
     email: 'email',
-    name: 'name'
+    photo_url: 'photo_url'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1734,25 +1754,32 @@ export namespace Prisma {
     OR?: Enumerable<UserWhereInput>
     NOT?: Enumerable<UserWhereInput>
     id?: IntFilter | number
+    user_name?: StringFilter | string
+    fullName?: StringFilter | string
     email?: StringFilter | string
-    name?: StringNullableFilter | string | null
+    photo_url?: StringFilter | string
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
+    user_name?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
-    name?: SortOrder
+    photo_url?: SortOrder
   }
 
   export type UserWhereUniqueInput = {
     id?: number
+    user_name?: string
     email?: string
   }
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
+    user_name?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
-    name?: SortOrder
+    photo_url?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -1765,47 +1792,63 @@ export namespace Prisma {
     OR?: Enumerable<UserScalarWhereWithAggregatesInput>
     NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    user_name?: StringWithAggregatesFilter | string
+    fullName?: StringWithAggregatesFilter | string
     email?: StringWithAggregatesFilter | string
-    name?: StringNullableWithAggregatesFilter | string | null
+    photo_url?: StringWithAggregatesFilter | string
   }
 
   export type UserCreateInput = {
+    user_name: string
+    fullName: string
     email: string
-    name?: string | null
+    photo_url: string
   }
 
   export type UserUncheckedCreateInput = {
     id?: number
+    user_name: string
+    fullName: string
     email: string
-    name?: string | null
+    photo_url: string
   }
 
   export type UserUpdateInput = {
+    user_name?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    photo_url?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    user_name?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    photo_url?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateManyInput = {
     id?: number
+    user_name: string
+    fullName: string
     email: string
-    name?: string | null
+    photo_url: string
   }
 
   export type UserUpdateManyMutationInput = {
+    user_name?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    photo_url?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    user_name?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    photo_url?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter = {
@@ -1834,25 +1877,12 @@ export namespace Prisma {
     not?: NestedStringFilter | string
   }
 
-  export type StringNullableFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    mode?: QueryMode
-    not?: NestedStringNullableFilter | string | null
-  }
-
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
+    user_name?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
-    name?: SortOrder
+    photo_url?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -1861,14 +1891,18 @@ export namespace Prisma {
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
+    user_name?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
-    name?: SortOrder
+    photo_url?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
+    user_name?: SortOrder
+    fullName?: SortOrder
     email?: SortOrder
-    name?: SortOrder
+    photo_url?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -1909,30 +1943,8 @@ export namespace Prisma {
     _max?: NestedStringFilter
   }
 
-  export type StringNullableWithAggregatesFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter | string | null
-    _count?: NestedIntNullableFilter
-    _min?: NestedStringNullableFilter
-    _max?: NestedStringNullableFilter
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -1966,20 +1978,6 @@ export namespace Prisma {
     startsWith?: string
     endsWith?: string
     not?: NestedStringFilter | string
-  }
-
-  export type NestedStringNullableFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    not?: NestedStringNullableFilter | string | null
   }
 
   export type NestedIntWithAggregatesFilter = {
@@ -2024,34 +2022,6 @@ export namespace Prisma {
     _count?: NestedIntFilter
     _min?: NestedStringFilter
     _max?: NestedStringFilter
-  }
-
-  export type NestedStringNullableWithAggregatesFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    not?: NestedStringNullableWithAggregatesFilter | string | null
-    _count?: NestedIntNullableFilter
-    _min?: NestedStringNullableFilter
-    _max?: NestedStringNullableFilter
-  }
-
-  export type NestedIntNullableFilter = {
-    equals?: number | null
-    in?: Enumerable<number> | null
-    notIn?: Enumerable<number> | null
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedIntNullableFilter | number | null
   }
 
 

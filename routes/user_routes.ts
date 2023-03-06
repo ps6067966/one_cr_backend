@@ -10,33 +10,39 @@ userRouter.get("/", (ctx) => {
     const users = await prisma.user.findMany();
     ctx.response.body = users;
   })
-  .get("/users/:id", async (ctx) => {
+  .get("/users/:email", async (ctx) => {
     const user = await prisma.user.findUnique({
       where: {
-        id: Number(ctx.params.id),
+        email: ctx.params.email,
       },
     });
     ctx.response.body = user;
   })
   .post("/users", async (ctx) => {
-    const { name, email } = await ctx.request.body().value;
+    const { user_name, email, fullName, photo_url } = await ctx.request.body()
+      .value;
     const user = await prisma.user.create({
       data: {
-        name,
+        user_name,
         email,
+        fullName,
+        photo_url,
       },
     });
     ctx.response.body = user;
   })
   .put("/users/:id", async (ctx) => {
-    const { name, email } = await ctx.request.body().value;
+    const { user_name, email, fullName, photo_url } = await ctx.request.body()
+      .value;
     const user = await prisma.user.update({
       where: {
         id: Number(ctx.params.id),
       },
       data: {
-        name,
+        user_name,
         email,
+        fullName,
+        photo_url,
       },
     });
     ctx.response.body = user;
