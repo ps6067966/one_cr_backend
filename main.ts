@@ -1,12 +1,10 @@
-// import { load } from "https://deno.land/std@0.178.0/dotenv/mod.ts";
 import { Application } from "https://deno.land/x/oak@v12.0.0/mod.ts";
-import router from "./routes/routes.ts";
-
-// const { DATABASE_URL } = await load();
+import userRouter from "./routes/user_routes.ts";
 
 const app = new Application();
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(userRouter.routes());
+app.use(userRouter.allowedMethods());
 
+console.log("Server running on port 8000");
 await app.listen({ port: 8000 });
