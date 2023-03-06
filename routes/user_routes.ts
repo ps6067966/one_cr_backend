@@ -19,20 +19,20 @@ userRouter.get("/", (ctx) => {
     ctx.response.body = user;
   })
   .post("/users", async (ctx) => {
-    const { user_name, email, fullName, photo_url } = await ctx.request.body()
+    const { user_name, email, full_name, photo_url } = await ctx.request.body()
       .value;
     const user = await prisma.user.create({
       data: {
         user_name,
         email,
-        fullName,
+        full_name,
         photo_url,
       },
     });
     ctx.response.body = user;
   })
   .put("/users/:id", async (ctx) => {
-    const { user_name, email, fullName, photo_url } = await ctx.request.body()
+    const { user_name, email, full_name, photo_url } = await ctx.request.body()
       .value;
     const user = await prisma.user.update({
       where: {
@@ -41,7 +41,7 @@ userRouter.get("/", (ctx) => {
       data: {
         user_name,
         email,
-        fullName,
+        full_name,
         photo_url,
       },
     });
