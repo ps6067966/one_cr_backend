@@ -15,7 +15,6 @@ const bank_details: Prisma.BankAccountDetailsCreateInput[] = [
     email: "ps6067966@gmail.com",
     paytm_number: "1234567890",
     upi_id: "dummy@upi",
-    user: { connect: { id: 1 } },
   },
 ];
 

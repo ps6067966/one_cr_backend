@@ -2009,12 +2009,12 @@ export namespace Prisma {
     S extends { include: any } & (BankAccountDetailsArgs | BankAccountDetailsFindManyArgs)
     ? BankAccountDetails  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? UserGetPayload<S['include'][P]> :  never
+        P extends 'user' ? UserGetPayload<S['include'][P]> | null :  never
   } 
     : S extends { select: any } & (BankAccountDetailsArgs | BankAccountDetailsFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? UserGetPayload<S['select'][P]> :  P extends keyof BankAccountDetails ? BankAccountDetails[P] : never
+        P extends 'user' ? UserGetPayload<S['select'][P]> | null :  P extends keyof BankAccountDetails ? BankAccountDetails[P] : never
   } 
       : BankAccountDetails
 
@@ -2886,7 +2886,7 @@ export namespace Prisma {
     email?: StringFilter | string
     upi_id?: StringFilter | string
     paytm_number?: StringFilter | string
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput> | null
   }
 
   export type BankAccountDetailsOrderByWithRelationInput = {
@@ -3000,7 +3000,7 @@ export namespace Prisma {
     email: string
     upi_id: string
     paytm_number: string
-    user: UserCreateNestedOneWithoutBank_detailsInput
+    user?: UserCreateNestedOneWithoutBank_detailsInput
   }
 
   export type BankAccountDetailsUncheckedCreateInput = {
@@ -3017,7 +3017,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     upi_id?: StringFieldUpdateOperationsInput | string
     paytm_number?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutBank_detailsNestedInput
+    user?: UserUpdateOneWithoutBank_detailsNestedInput
   }
 
   export type BankAccountDetailsUncheckedUpdateInput = {
@@ -3155,8 +3155,8 @@ export namespace Prisma {
   }
 
   export type UserRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type BankAccountDetailsCountOrderByAggregateInput = {
@@ -3246,10 +3246,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutBank_detailsNestedInput = {
+  export type UserUpdateOneWithoutBank_detailsNestedInput = {
     create?: XOR<UserCreateWithoutBank_detailsInput, UserUncheckedCreateWithoutBank_detailsInput>
     connectOrCreate?: UserCreateOrConnectWithoutBank_detailsInput
     upsert?: UserUpsertWithoutBank_detailsInput
+    disconnect?: boolean
+    delete?: boolean
     connect?: UserWhereUniqueInput
     update?: XOR<UserUpdateWithoutBank_detailsInput, UserUncheckedUpdateWithoutBank_detailsInput>
   }
