@@ -20,6 +20,20 @@ export type User = {
   full_name: string
   email: string
   photo_url: string
+  mobile_number: string
+}
+
+/**
+ * Model BankAccountDetails
+ * 
+ */
+export type BankAccountDetails = {
+  id: number
+  user_id: number
+  full_name: string
+  email: string
+  upi_id: string
+  paytm_number: string
 }
 
 
@@ -149,6 +163,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.bankAccountDetails`: Exposes CRUD operations for the **BankAccountDetails** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BankAccountDetails
+    * const bankAccountDetails = await prisma.bankAccountDetails.findMany()
+    * ```
+    */
+  get bankAccountDetails(): Prisma.BankAccountDetailsDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -618,7 +642,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    User: 'User'
+    User: 'User',
+    BankAccountDetails: 'BankAccountDetails'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -779,6 +804,48 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+
+  export type UserCountOutputType = {
+    bank_details: number
+  }
+
+  export type UserCountOutputTypeSelect = {
+    bank_details?: boolean
+  }
+
+  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (UserCountOutputTypeArgs)
+    ? UserCountOutputType 
+    : S extends { select: any } & (UserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
+  } 
+      : UserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect | null
+  }
+
+
 
   /**
    * Models
@@ -811,6 +878,7 @@ export namespace Prisma {
     full_name: string | null
     email: string | null
     photo_url: string | null
+    mobile_number: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -819,6 +887,7 @@ export namespace Prisma {
     full_name: string | null
     email: string | null
     photo_url: string | null
+    mobile_number: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -827,6 +896,7 @@ export namespace Prisma {
     full_name: number
     email: number
     photo_url: number
+    mobile_number: number
     _all: number
   }
 
@@ -845,6 +915,7 @@ export namespace Prisma {
     full_name?: true
     email?: true
     photo_url?: true
+    mobile_number?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -853,6 +924,7 @@ export namespace Prisma {
     full_name?: true
     email?: true
     photo_url?: true
+    mobile_number?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -861,6 +933,7 @@ export namespace Prisma {
     full_name?: true
     email?: true
     photo_url?: true
+    mobile_number?: true
     _all?: true
   }
 
@@ -957,6 +1030,7 @@ export namespace Prisma {
     full_name: string
     email: string
     photo_url: string
+    mobile_number: string
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -984,19 +1058,32 @@ export namespace Prisma {
     full_name?: boolean
     email?: boolean
     photo_url?: boolean
+    mobile_number?: boolean
+    bank_details?: boolean | User$bank_detailsArgs
+    _count?: boolean | UserCountOutputTypeArgs
   }
 
+
+  export type UserInclude = {
+    bank_details?: boolean | User$bank_detailsArgs
+    _count?: boolean | UserCountOutputTypeArgs
+  }
 
   export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? User :
     S extends undefined ? never :
     S extends { include: any } & (UserArgs | UserFindManyArgs)
-    ? User 
+    ? User  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'bank_details' ? Array < BankAccountDetailsGetPayload<S['include'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
     : S extends { select: any } & (UserArgs | UserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof User ? User[P] : never
+        P extends 'bank_details' ? Array < BankAccountDetailsGetPayload<S['select'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
   } 
       : User
 
@@ -1368,6 +1455,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
+    bank_details<T extends User$bank_detailsArgs= {}>(args?: Subset<T, User$bank_detailsArgs>): Prisma.PrismaPromise<Array<BankAccountDetailsGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -1405,6 +1493,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1431,6 +1523,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1445,6 +1541,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
     /**
      * Filter, which User to fetch.
      */
@@ -1502,6 +1602,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1547,6 +1651,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1587,6 +1695,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -1613,6 +1725,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
     /**
      * The data needed to update a User.
      */
@@ -1648,6 +1764,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -1671,6 +1791,10 @@ export namespace Prisma {
      */
     select?: UserSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -1689,6 +1813,27 @@ export namespace Prisma {
 
 
   /**
+   * User.bank_details
+   */
+  export type User$bank_detailsArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    where?: BankAccountDetailsWhereInput
+    orderBy?: Enumerable<BankAccountDetailsOrderByWithRelationInput>
+    cursor?: BankAccountDetailsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BankAccountDetailsScalarFieldEnum>
+  }
+
+
+  /**
    * User without action
    */
   export type UserArgs = {
@@ -1696,6 +1841,987 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+  }
+
+
+
+  /**
+   * Model BankAccountDetails
+   */
+
+
+  export type AggregateBankAccountDetails = {
+    _count: BankAccountDetailsCountAggregateOutputType | null
+    _avg: BankAccountDetailsAvgAggregateOutputType | null
+    _sum: BankAccountDetailsSumAggregateOutputType | null
+    _min: BankAccountDetailsMinAggregateOutputType | null
+    _max: BankAccountDetailsMaxAggregateOutputType | null
+  }
+
+  export type BankAccountDetailsAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type BankAccountDetailsSumAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type BankAccountDetailsMinAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    full_name: string | null
+    email: string | null
+    upi_id: string | null
+    paytm_number: string | null
+  }
+
+  export type BankAccountDetailsMaxAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    full_name: string | null
+    email: string | null
+    upi_id: string | null
+    paytm_number: string | null
+  }
+
+  export type BankAccountDetailsCountAggregateOutputType = {
+    id: number
+    user_id: number
+    full_name: number
+    email: number
+    upi_id: number
+    paytm_number: number
+    _all: number
+  }
+
+
+  export type BankAccountDetailsAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type BankAccountDetailsSumAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type BankAccountDetailsMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    full_name?: true
+    email?: true
+    upi_id?: true
+    paytm_number?: true
+  }
+
+  export type BankAccountDetailsMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    full_name?: true
+    email?: true
+    upi_id?: true
+    paytm_number?: true
+  }
+
+  export type BankAccountDetailsCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    full_name?: true
+    email?: true
+    upi_id?: true
+    paytm_number?: true
+    _all?: true
+  }
+
+  export type BankAccountDetailsAggregateArgs = {
+    /**
+     * Filter which BankAccountDetails to aggregate.
+     */
+    where?: BankAccountDetailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankAccountDetails to fetch.
+     */
+    orderBy?: Enumerable<BankAccountDetailsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BankAccountDetailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankAccountDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankAccountDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BankAccountDetails
+    **/
+    _count?: true | BankAccountDetailsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BankAccountDetailsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BankAccountDetailsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BankAccountDetailsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BankAccountDetailsMaxAggregateInputType
+  }
+
+  export type GetBankAccountDetailsAggregateType<T extends BankAccountDetailsAggregateArgs> = {
+        [P in keyof T & keyof AggregateBankAccountDetails]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBankAccountDetails[P]>
+      : GetScalarType<T[P], AggregateBankAccountDetails[P]>
+  }
+
+
+
+
+  export type BankAccountDetailsGroupByArgs = {
+    where?: BankAccountDetailsWhereInput
+    orderBy?: Enumerable<BankAccountDetailsOrderByWithAggregationInput>
+    by: BankAccountDetailsScalarFieldEnum[]
+    having?: BankAccountDetailsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BankAccountDetailsCountAggregateInputType | true
+    _avg?: BankAccountDetailsAvgAggregateInputType
+    _sum?: BankAccountDetailsSumAggregateInputType
+    _min?: BankAccountDetailsMinAggregateInputType
+    _max?: BankAccountDetailsMaxAggregateInputType
+  }
+
+
+  export type BankAccountDetailsGroupByOutputType = {
+    id: number
+    user_id: number
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+    _count: BankAccountDetailsCountAggregateOutputType | null
+    _avg: BankAccountDetailsAvgAggregateOutputType | null
+    _sum: BankAccountDetailsSumAggregateOutputType | null
+    _min: BankAccountDetailsMinAggregateOutputType | null
+    _max: BankAccountDetailsMaxAggregateOutputType | null
+  }
+
+  type GetBankAccountDetailsGroupByPayload<T extends BankAccountDetailsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BankAccountDetailsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BankAccountDetailsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BankAccountDetailsGroupByOutputType[P]>
+            : GetScalarType<T[P], BankAccountDetailsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BankAccountDetailsSelect = {
+    id?: boolean
+    user_id?: boolean
+    full_name?: boolean
+    email?: boolean
+    upi_id?: boolean
+    paytm_number?: boolean
+    user?: boolean | UserArgs
+  }
+
+
+  export type BankAccountDetailsInclude = {
+    user?: boolean | UserArgs
+  }
+
+  export type BankAccountDetailsGetPayload<S extends boolean | null | undefined | BankAccountDetailsArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BankAccountDetails :
+    S extends undefined ? never :
+    S extends { include: any } & (BankAccountDetailsArgs | BankAccountDetailsFindManyArgs)
+    ? BankAccountDetails  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? UserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BankAccountDetailsArgs | BankAccountDetailsFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? UserGetPayload<S['select'][P]> :  P extends keyof BankAccountDetails ? BankAccountDetails[P] : never
+  } 
+      : BankAccountDetails
+
+
+  type BankAccountDetailsCountArgs = 
+    Omit<BankAccountDetailsFindManyArgs, 'select' | 'include'> & {
+      select?: BankAccountDetailsCountAggregateInputType | true
+    }
+
+  export interface BankAccountDetailsDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one BankAccountDetails that matches the filter.
+     * @param {BankAccountDetailsFindUniqueArgs} args - Arguments to find a BankAccountDetails
+     * @example
+     * // Get one BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BankAccountDetailsFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BankAccountDetailsFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BankAccountDetails'> extends True ? Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>> : Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T> | null, null>
+
+    /**
+     * Find one BankAccountDetails that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BankAccountDetailsFindUniqueOrThrowArgs} args - Arguments to find a BankAccountDetails
+     * @example
+     * // Get one BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BankAccountDetailsFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BankAccountDetailsFindUniqueOrThrowArgs>
+    ): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>>
+
+    /**
+     * Find the first BankAccountDetails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsFindFirstArgs} args - Arguments to find a BankAccountDetails
+     * @example
+     * // Get one BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BankAccountDetailsFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BankAccountDetailsFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BankAccountDetails'> extends True ? Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>> : Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T> | null, null>
+
+    /**
+     * Find the first BankAccountDetails that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsFindFirstOrThrowArgs} args - Arguments to find a BankAccountDetails
+     * @example
+     * // Get one BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BankAccountDetailsFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BankAccountDetailsFindFirstOrThrowArgs>
+    ): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>>
+
+    /**
+     * Find zero or more BankAccountDetails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.findMany()
+     * 
+     * // Get first 10 BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bankAccountDetailsWithIdOnly = await prisma.bankAccountDetails.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BankAccountDetailsFindManyArgs>(
+      args?: SelectSubset<T, BankAccountDetailsFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BankAccountDetailsGetPayload<T>>>
+
+    /**
+     * Create a BankAccountDetails.
+     * @param {BankAccountDetailsCreateArgs} args - Arguments to create a BankAccountDetails.
+     * @example
+     * // Create one BankAccountDetails
+     * const BankAccountDetails = await prisma.bankAccountDetails.create({
+     *   data: {
+     *     // ... data to create a BankAccountDetails
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BankAccountDetailsCreateArgs>(
+      args: SelectSubset<T, BankAccountDetailsCreateArgs>
+    ): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>>
+
+    /**
+     * Create many BankAccountDetails.
+     *     @param {BankAccountDetailsCreateManyArgs} args - Arguments to create many BankAccountDetails.
+     *     @example
+     *     // Create many BankAccountDetails
+     *     const bankAccountDetails = await prisma.bankAccountDetails.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BankAccountDetailsCreateManyArgs>(
+      args?: SelectSubset<T, BankAccountDetailsCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BankAccountDetails.
+     * @param {BankAccountDetailsDeleteArgs} args - Arguments to delete one BankAccountDetails.
+     * @example
+     * // Delete one BankAccountDetails
+     * const BankAccountDetails = await prisma.bankAccountDetails.delete({
+     *   where: {
+     *     // ... filter to delete one BankAccountDetails
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BankAccountDetailsDeleteArgs>(
+      args: SelectSubset<T, BankAccountDetailsDeleteArgs>
+    ): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>>
+
+    /**
+     * Update one BankAccountDetails.
+     * @param {BankAccountDetailsUpdateArgs} args - Arguments to update one BankAccountDetails.
+     * @example
+     * // Update one BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BankAccountDetailsUpdateArgs>(
+      args: SelectSubset<T, BankAccountDetailsUpdateArgs>
+    ): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>>
+
+    /**
+     * Delete zero or more BankAccountDetails.
+     * @param {BankAccountDetailsDeleteManyArgs} args - Arguments to filter BankAccountDetails to delete.
+     * @example
+     * // Delete a few BankAccountDetails
+     * const { count } = await prisma.bankAccountDetails.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BankAccountDetailsDeleteManyArgs>(
+      args?: SelectSubset<T, BankAccountDetailsDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BankAccountDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BankAccountDetailsUpdateManyArgs>(
+      args: SelectSubset<T, BankAccountDetailsUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BankAccountDetails.
+     * @param {BankAccountDetailsUpsertArgs} args - Arguments to update or create a BankAccountDetails.
+     * @example
+     * // Update or create a BankAccountDetails
+     * const bankAccountDetails = await prisma.bankAccountDetails.upsert({
+     *   create: {
+     *     // ... data to create a BankAccountDetails
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BankAccountDetails we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BankAccountDetailsUpsertArgs>(
+      args: SelectSubset<T, BankAccountDetailsUpsertArgs>
+    ): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T>>
+
+    /**
+     * Count the number of BankAccountDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsCountArgs} args - Arguments to filter BankAccountDetails to count.
+     * @example
+     * // Count the number of BankAccountDetails
+     * const count = await prisma.bankAccountDetails.count({
+     *   where: {
+     *     // ... the filter for the BankAccountDetails we want to count
+     *   }
+     * })
+    **/
+    count<T extends BankAccountDetailsCountArgs>(
+      args?: Subset<T, BankAccountDetailsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BankAccountDetailsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BankAccountDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BankAccountDetailsAggregateArgs>(args: Subset<T, BankAccountDetailsAggregateArgs>): Prisma.PrismaPromise<GetBankAccountDetailsAggregateType<T>>
+
+    /**
+     * Group by BankAccountDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankAccountDetailsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BankAccountDetailsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BankAccountDetailsGroupByArgs['orderBy'] }
+        : { orderBy?: BankAccountDetailsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BankAccountDetailsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBankAccountDetailsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BankAccountDetails.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BankAccountDetailsClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BankAccountDetails base type for findUnique actions
+   */
+  export type BankAccountDetailsFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * Filter, which BankAccountDetails to fetch.
+     */
+    where: BankAccountDetailsWhereUniqueInput
+  }
+
+  /**
+   * BankAccountDetails findUnique
+   */
+  export interface BankAccountDetailsFindUniqueArgs extends BankAccountDetailsFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BankAccountDetails findUniqueOrThrow
+   */
+  export type BankAccountDetailsFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * Filter, which BankAccountDetails to fetch.
+     */
+    where: BankAccountDetailsWhereUniqueInput
+  }
+
+
+  /**
+   * BankAccountDetails base type for findFirst actions
+   */
+  export type BankAccountDetailsFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * Filter, which BankAccountDetails to fetch.
+     */
+    where?: BankAccountDetailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankAccountDetails to fetch.
+     */
+    orderBy?: Enumerable<BankAccountDetailsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BankAccountDetails.
+     */
+    cursor?: BankAccountDetailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankAccountDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankAccountDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankAccountDetails.
+     */
+    distinct?: Enumerable<BankAccountDetailsScalarFieldEnum>
+  }
+
+  /**
+   * BankAccountDetails findFirst
+   */
+  export interface BankAccountDetailsFindFirstArgs extends BankAccountDetailsFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BankAccountDetails findFirstOrThrow
+   */
+  export type BankAccountDetailsFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * Filter, which BankAccountDetails to fetch.
+     */
+    where?: BankAccountDetailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankAccountDetails to fetch.
+     */
+    orderBy?: Enumerable<BankAccountDetailsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BankAccountDetails.
+     */
+    cursor?: BankAccountDetailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankAccountDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankAccountDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankAccountDetails.
+     */
+    distinct?: Enumerable<BankAccountDetailsScalarFieldEnum>
+  }
+
+
+  /**
+   * BankAccountDetails findMany
+   */
+  export type BankAccountDetailsFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * Filter, which BankAccountDetails to fetch.
+     */
+    where?: BankAccountDetailsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankAccountDetails to fetch.
+     */
+    orderBy?: Enumerable<BankAccountDetailsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BankAccountDetails.
+     */
+    cursor?: BankAccountDetailsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankAccountDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankAccountDetails.
+     */
+    skip?: number
+    distinct?: Enumerable<BankAccountDetailsScalarFieldEnum>
+  }
+
+
+  /**
+   * BankAccountDetails create
+   */
+  export type BankAccountDetailsCreateArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * The data needed to create a BankAccountDetails.
+     */
+    data: XOR<BankAccountDetailsCreateInput, BankAccountDetailsUncheckedCreateInput>
+  }
+
+
+  /**
+   * BankAccountDetails createMany
+   */
+  export type BankAccountDetailsCreateManyArgs = {
+    /**
+     * The data used to create many BankAccountDetails.
+     */
+    data: Enumerable<BankAccountDetailsCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * BankAccountDetails update
+   */
+  export type BankAccountDetailsUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * The data needed to update a BankAccountDetails.
+     */
+    data: XOR<BankAccountDetailsUpdateInput, BankAccountDetailsUncheckedUpdateInput>
+    /**
+     * Choose, which BankAccountDetails to update.
+     */
+    where: BankAccountDetailsWhereUniqueInput
+  }
+
+
+  /**
+   * BankAccountDetails updateMany
+   */
+  export type BankAccountDetailsUpdateManyArgs = {
+    /**
+     * The data used to update BankAccountDetails.
+     */
+    data: XOR<BankAccountDetailsUpdateManyMutationInput, BankAccountDetailsUncheckedUpdateManyInput>
+    /**
+     * Filter which BankAccountDetails to update
+     */
+    where?: BankAccountDetailsWhereInput
+  }
+
+
+  /**
+   * BankAccountDetails upsert
+   */
+  export type BankAccountDetailsUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * The filter to search for the BankAccountDetails to update in case it exists.
+     */
+    where: BankAccountDetailsWhereUniqueInput
+    /**
+     * In case the BankAccountDetails found by the `where` argument doesn't exist, create a new BankAccountDetails with this data.
+     */
+    create: XOR<BankAccountDetailsCreateInput, BankAccountDetailsUncheckedCreateInput>
+    /**
+     * In case the BankAccountDetails was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BankAccountDetailsUpdateInput, BankAccountDetailsUncheckedUpdateInput>
+  }
+
+
+  /**
+   * BankAccountDetails delete
+   */
+  export type BankAccountDetailsDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
+    /**
+     * Filter which BankAccountDetails to delete.
+     */
+    where: BankAccountDetailsWhereUniqueInput
+  }
+
+
+  /**
+   * BankAccountDetails deleteMany
+   */
+  export type BankAccountDetailsDeleteManyArgs = {
+    /**
+     * Filter which BankAccountDetails to delete
+     */
+    where?: BankAccountDetailsWhereInput
+  }
+
+
+  /**
+   * BankAccountDetails without action
+   */
+  export type BankAccountDetailsArgs = {
+    /**
+     * Select specific fields to fetch from the BankAccountDetails
+     */
+    select?: BankAccountDetailsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BankAccountDetailsInclude | null
   }
 
 
@@ -1706,6 +2832,18 @@ export namespace Prisma {
 
   // Based on
   // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
+
+  export const BankAccountDetailsScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    full_name: 'full_name',
+    email: 'email',
+    upi_id: 'upi_id',
+    paytm_number: 'paytm_number'
+  };
+
+  export type BankAccountDetailsScalarFieldEnum = (typeof BankAccountDetailsScalarFieldEnum)[keyof typeof BankAccountDetailsScalarFieldEnum]
+
 
   export const QueryMode: {
     default: 'default',
@@ -1738,7 +2876,8 @@ export namespace Prisma {
     user_name: 'user_name',
     full_name: 'full_name',
     email: 'email',
-    photo_url: 'photo_url'
+    photo_url: 'photo_url',
+    mobile_number: 'mobile_number'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1758,6 +2897,8 @@ export namespace Prisma {
     full_name?: StringFilter | string
     email?: StringFilter | string
     photo_url?: StringFilter | string
+    mobile_number?: StringFilter | string
+    bank_details?: BankAccountDetailsListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -1766,6 +2907,8 @@ export namespace Prisma {
     full_name?: SortOrder
     email?: SortOrder
     photo_url?: SortOrder
+    mobile_number?: SortOrder
+    bank_details?: BankAccountDetailsOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = {
@@ -1780,6 +2923,7 @@ export namespace Prisma {
     full_name?: SortOrder
     email?: SortOrder
     photo_url?: SortOrder
+    mobile_number?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -1796,6 +2940,61 @@ export namespace Prisma {
     full_name?: StringWithAggregatesFilter | string
     email?: StringWithAggregatesFilter | string
     photo_url?: StringWithAggregatesFilter | string
+    mobile_number?: StringWithAggregatesFilter | string
+  }
+
+  export type BankAccountDetailsWhereInput = {
+    AND?: Enumerable<BankAccountDetailsWhereInput>
+    OR?: Enumerable<BankAccountDetailsWhereInput>
+    NOT?: Enumerable<BankAccountDetailsWhereInput>
+    id?: IntFilter | number
+    user_id?: IntFilter | number
+    full_name?: StringFilter | string
+    email?: StringFilter | string
+    upi_id?: StringFilter | string
+    paytm_number?: StringFilter | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type BankAccountDetailsOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    upi_id?: SortOrder
+    paytm_number?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type BankAccountDetailsWhereUniqueInput = {
+    id?: number
+    email?: string
+  }
+
+  export type BankAccountDetailsOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    upi_id?: SortOrder
+    paytm_number?: SortOrder
+    _count?: BankAccountDetailsCountOrderByAggregateInput
+    _avg?: BankAccountDetailsAvgOrderByAggregateInput
+    _max?: BankAccountDetailsMaxOrderByAggregateInput
+    _min?: BankAccountDetailsMinOrderByAggregateInput
+    _sum?: BankAccountDetailsSumOrderByAggregateInput
+  }
+
+  export type BankAccountDetailsScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BankAccountDetailsScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BankAccountDetailsScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BankAccountDetailsScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    user_id?: IntWithAggregatesFilter | number
+    full_name?: StringWithAggregatesFilter | string
+    email?: StringWithAggregatesFilter | string
+    upi_id?: StringWithAggregatesFilter | string
+    paytm_number?: StringWithAggregatesFilter | string
   }
 
   export type UserCreateInput = {
@@ -1803,6 +3002,8 @@ export namespace Prisma {
     full_name: string
     email: string
     photo_url: string
+    mobile_number: string
+    bank_details?: BankAccountDetailsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -1811,6 +3012,8 @@ export namespace Prisma {
     full_name: string
     email: string
     photo_url: string
+    mobile_number: string
+    bank_details?: BankAccountDetailsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -1818,6 +3021,8 @@ export namespace Prisma {
     full_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+    bank_details?: BankAccountDetailsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -1826,6 +3031,8 @@ export namespace Prisma {
     full_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+    bank_details?: BankAccountDetailsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -1834,6 +3041,7 @@ export namespace Prisma {
     full_name: string
     email: string
     photo_url: string
+    mobile_number: string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -1841,6 +3049,7 @@ export namespace Prisma {
     full_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -1849,6 +3058,66 @@ export namespace Prisma {
     full_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BankAccountDetailsCreateInput = {
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+    user: UserCreateNestedOneWithoutBank_detailsInput
+  }
+
+  export type BankAccountDetailsUncheckedCreateInput = {
+    id?: number
+    user_id: number
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+  }
+
+  export type BankAccountDetailsUpdateInput = {
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutBank_detailsNestedInput
+  }
+
+  export type BankAccountDetailsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BankAccountDetailsCreateManyInput = {
+    id?: number
+    user_id: number
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+  }
+
+  export type BankAccountDetailsUpdateManyMutationInput = {
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BankAccountDetailsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter = {
@@ -1877,12 +3146,23 @@ export namespace Prisma {
     not?: NestedStringFilter | string
   }
 
+  export type BankAccountDetailsListRelationFilter = {
+    every?: BankAccountDetailsWhereInput
+    some?: BankAccountDetailsWhereInput
+    none?: BankAccountDetailsWhereInput
+  }
+
+  export type BankAccountDetailsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     user_name?: SortOrder
     full_name?: SortOrder
     email?: SortOrder
     photo_url?: SortOrder
+    mobile_number?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -1895,6 +3175,7 @@ export namespace Prisma {
     full_name?: SortOrder
     email?: SortOrder
     photo_url?: SortOrder
+    mobile_number?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -1903,6 +3184,7 @@ export namespace Prisma {
     full_name?: SortOrder
     email?: SortOrder
     photo_url?: SortOrder
+    mobile_number?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -1943,8 +3225,78 @@ export namespace Prisma {
     _max?: NestedStringFilter
   }
 
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type BankAccountDetailsCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    upi_id?: SortOrder
+    paytm_number?: SortOrder
+  }
+
+  export type BankAccountDetailsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type BankAccountDetailsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    upi_id?: SortOrder
+    paytm_number?: SortOrder
+  }
+
+  export type BankAccountDetailsMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    full_name?: SortOrder
+    email?: SortOrder
+    upi_id?: SortOrder
+    paytm_number?: SortOrder
+  }
+
+  export type BankAccountDetailsSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type BankAccountDetailsCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
+    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
+    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+  }
+
+  export type BankAccountDetailsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
+    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
+    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type BankAccountDetailsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<BankAccountDetailsUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
+    set?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    disconnect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    delete?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    update?: Enumerable<BankAccountDetailsUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<BankAccountDetailsUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<BankAccountDetailsScalarWhereInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -1953,6 +3305,34 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BankAccountDetailsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<BankAccountDetailsCreateWithoutUserInput>, Enumerable<BankAccountDetailsUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<BankAccountDetailsCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<BankAccountDetailsUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: BankAccountDetailsCreateManyUserInputEnvelope
+    set?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    disconnect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    delete?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    connect?: Enumerable<BankAccountDetailsWhereUniqueInput>
+    update?: Enumerable<BankAccountDetailsUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<BankAccountDetailsUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<BankAccountDetailsScalarWhereInput>
+  }
+
+  export type UserCreateNestedOneWithoutBank_detailsInput = {
+    create?: XOR<UserCreateWithoutBank_detailsInput, UserUncheckedCreateWithoutBank_detailsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBank_detailsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBank_detailsNestedInput = {
+    create?: XOR<UserCreateWithoutBank_detailsInput, UserUncheckedCreateWithoutBank_detailsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBank_detailsInput
+    upsert?: UserUpsertWithoutBank_detailsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutBank_detailsInput, UserUncheckedUpdateWithoutBank_detailsInput>
   }
 
   export type NestedIntFilter = {
@@ -2022,6 +3402,134 @@ export namespace Prisma {
     _count?: NestedIntFilter
     _min?: NestedStringFilter
     _max?: NestedStringFilter
+  }
+
+  export type BankAccountDetailsCreateWithoutUserInput = {
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+  }
+
+  export type BankAccountDetailsUncheckedCreateWithoutUserInput = {
+    id?: number
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+  }
+
+  export type BankAccountDetailsCreateOrConnectWithoutUserInput = {
+    where: BankAccountDetailsWhereUniqueInput
+    create: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
+  }
+
+  export type BankAccountDetailsCreateManyUserInputEnvelope = {
+    data: Enumerable<BankAccountDetailsCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type BankAccountDetailsUpsertWithWhereUniqueWithoutUserInput = {
+    where: BankAccountDetailsWhereUniqueInput
+    update: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
+    create: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
+  }
+
+  export type BankAccountDetailsUpdateWithWhereUniqueWithoutUserInput = {
+    where: BankAccountDetailsWhereUniqueInput
+    data: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BankAccountDetailsUpdateManyWithWhereWithoutUserInput = {
+    where: BankAccountDetailsScalarWhereInput
+    data: XOR<BankAccountDetailsUpdateManyMutationInput, BankAccountDetailsUncheckedUpdateManyWithoutBank_detailsInput>
+  }
+
+  export type BankAccountDetailsScalarWhereInput = {
+    AND?: Enumerable<BankAccountDetailsScalarWhereInput>
+    OR?: Enumerable<BankAccountDetailsScalarWhereInput>
+    NOT?: Enumerable<BankAccountDetailsScalarWhereInput>
+    id?: IntFilter | number
+    user_id?: IntFilter | number
+    full_name?: StringFilter | string
+    email?: StringFilter | string
+    upi_id?: StringFilter | string
+    paytm_number?: StringFilter | string
+  }
+
+  export type UserCreateWithoutBank_detailsInput = {
+    user_name: string
+    full_name: string
+    email: string
+    photo_url: string
+    mobile_number: string
+  }
+
+  export type UserUncheckedCreateWithoutBank_detailsInput = {
+    id?: number
+    user_name: string
+    full_name: string
+    email: string
+    photo_url: string
+    mobile_number: string
+  }
+
+  export type UserCreateOrConnectWithoutBank_detailsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBank_detailsInput, UserUncheckedCreateWithoutBank_detailsInput>
+  }
+
+  export type UserUpsertWithoutBank_detailsInput = {
+    update: XOR<UserUpdateWithoutBank_detailsInput, UserUncheckedUpdateWithoutBank_detailsInput>
+    create: XOR<UserCreateWithoutBank_detailsInput, UserUncheckedCreateWithoutBank_detailsInput>
+  }
+
+  export type UserUpdateWithoutBank_detailsInput = {
+    user_name?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateWithoutBank_detailsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_name?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BankAccountDetailsCreateManyUserInput = {
+    id?: number
+    full_name: string
+    email: string
+    upi_id: string
+    paytm_number: string
+  }
+
+  export type BankAccountDetailsUpdateWithoutUserInput = {
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BankAccountDetailsUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BankAccountDetailsUncheckedUpdateManyWithoutBank_detailsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    upi_id?: StringFieldUpdateOperationsInput | string
+    paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
 
