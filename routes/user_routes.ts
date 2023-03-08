@@ -19,7 +19,8 @@ userRouter.get("/", (ctx) => {
     ctx.response.body = user;
   })
   .post("/users", async (ctx) => {
-    const { user_name, email, full_name, photo_url } = await ctx.request.body()
+    const { user_name, email, full_name, photo_url, mobile_number } = await ctx
+      .request.body()
       .value;
     const user = await prisma.user.create({
       data: {
@@ -27,6 +28,7 @@ userRouter.get("/", (ctx) => {
         email,
         full_name,
         photo_url,
+        mobile_number,
       },
     });
     ctx.response.body = user;
