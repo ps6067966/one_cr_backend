@@ -4,7 +4,7 @@ import prisma from "./prisma_client.ts";
 const userRouter = new Router();
 
 userRouter.get("/", (ctx) => {
-  ctx.response.body = "1 CR 1.0.0";
+  ctx.response.body = "1 CR 1.0.1";
 })
   .get("/users", async (ctx) => {
     const users = await prisma.user.findMany();
