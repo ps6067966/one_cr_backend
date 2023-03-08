@@ -17,7 +17,7 @@ bankRouter
     ctx.response.body = bank;
   })
   .post("/banks", async (ctx) => {
-    const { email, full_name, paytm_number, upi_id, user_id, user } = await ctx
+    const { email, full_name, paytm_number, upi_id, user_id } = await ctx
       .request.body()
       .value;
     const bank = await prisma.bankAccountDetails.create({
@@ -26,14 +26,13 @@ bankRouter
         email,
         paytm_number,
         upi_id,
-        user_id,
-        user,
+        user_id,   
       },
     });
     ctx.response.body = bank;
   })
   .put("/banks/:id", async (ctx) => {
-    const { email, full_name, paytm_number, upi_id, user_id, user } = await ctx
+    const { email, full_name, paytm_number, upi_id, user_id } = await ctx
       .request.body()
       .value;
     const bank = await prisma.bankAccountDetails.update({
@@ -45,7 +44,6 @@ bankRouter
         full_name,
         paytm_number,
         upi_id,
-        user,
         user_id,
       },
     });
