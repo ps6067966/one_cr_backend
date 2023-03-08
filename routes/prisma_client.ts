@@ -4,7 +4,7 @@ const prisma = new PrismaClient({
   datasources: {
     db: {
       url:
-        "postgresql://ps6067966:v2_3zpL7_zCKUAWJmXQks4qfbLWwqgWF@db.bit.io:5432/ps6067966.OneCrore?schema=public",
+        "prisma://aws-us-east-1.prisma-data.com/?api_key=85xQNyVL7hiq3SURGh5arVnZhE4JyumjMMn6cM6GkaQGxHmKwchlaE-3brsz_CdX",
     },
   },
 });
