@@ -103,7 +103,9 @@ exports.Prisma.OpinionRewardTransactionScalarFieldEnum = makeEnum({
   user_id: 'user_id',
   email_id: 'email_id',
   product_id: 'product_id',
-  purchase_id: 'purchase_id'
+  purchase_id: 'purchase_id',
+  error_message: 'error_message',
+  transaction_date: 'transaction_date'
 });
 
 exports.Prisma.QueryMode = makeEnum({

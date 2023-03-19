@@ -41,4 +41,6 @@ model OpinionRewardTransaction {
   email_id String    
   product_id      String
   purchase_id     String
+  error_message  String
+  transaction_date String
 }

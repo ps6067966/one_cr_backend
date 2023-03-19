@@ -17,7 +17,7 @@ transactionRouter
     ctx.response.body = transactions;
   })
   .post("/transactions", async (ctx) => {
-    const { email_id, user_id, product_id, purchase_id } = await ctx
+    const { email_id, user_id, product_id, purchase_id, error_message, transaction_date } = await ctx
       .request.body()
       .value;
     const transaction = await prisma.opinionRewardTransaction.create({
@@ -25,13 +25,15 @@ transactionRouter
         email_id,
         user_id,   
         product_id,
-        purchase_id
+        purchase_id,
+        error_message,
+        transaction_date
       },
     });
     ctx.response.body = transaction;
   })
   .put("/transactions/:id", async (ctx) => {
-    const { email_id, user_id, product_id, purchase_id } = await ctx
+    const { email_id, user_id, product_id, purchase_id, error_message, transaction_date } = await ctx
       .request.body()
       .value;
     const transaction = await prisma.opinionRewardTransaction.update({
@@ -42,13 +44,15 @@ transactionRouter
         email_id,
         user_id,   
         product_id,
-        purchase_id
+        purchase_id,
+        error_message,
+        transaction_date
       },
     });
     ctx.response.body = transaction;
   })
   .patch("/transactions/:id", async (ctx) => {
-    const { email_id, user_id, product_id, purchase_id } = await ctx
+    const { email_id, user_id, product_id, purchase_id, error_message, transaction_date } = await ctx
       .request.body()
       .value;
     const transaction = await prisma.opinionRewardTransaction.update({
@@ -59,7 +63,9 @@ transactionRouter
         email_id,
         user_id,   
         product_id,
-        purchase_id
+        purchase_id,
+        error_message,
+        transaction_date
       },
     });
     ctx.response.body = transaction;

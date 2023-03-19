@@ -46,6 +46,8 @@ export type OpinionRewardTransaction = {
   email_id: string
   product_id: string
   purchase_id: string
+  error_message: string
+  transaction_date: string
 }
 
 
@@ -2884,6 +2886,8 @@ export namespace Prisma {
     email_id: string | null
     product_id: string | null
     purchase_id: string | null
+    error_message: string | null
+    transaction_date: string | null
   }
 
   export type OpinionRewardTransactionMaxAggregateOutputType = {
@@ -2892,6 +2896,8 @@ export namespace Prisma {
     email_id: string | null
     product_id: string | null
     purchase_id: string | null
+    error_message: string | null
+    transaction_date: string | null
   }
 
   export type OpinionRewardTransactionCountAggregateOutputType = {
@@ -2900,6 +2906,8 @@ export namespace Prisma {
     email_id: number
     product_id: number
     purchase_id: number
+    error_message: number
+    transaction_date: number
     _all: number
   }
 
@@ -2920,6 +2928,8 @@ export namespace Prisma {
     email_id?: true
     product_id?: true
     purchase_id?: true
+    error_message?: true
+    transaction_date?: true
   }
 
   export type OpinionRewardTransactionMaxAggregateInputType = {
@@ -2928,6 +2938,8 @@ export namespace Prisma {
     email_id?: true
     product_id?: true
     purchase_id?: true
+    error_message?: true
+    transaction_date?: true
   }
 
   export type OpinionRewardTransactionCountAggregateInputType = {
@@ -2936,6 +2948,8 @@ export namespace Prisma {
     email_id?: true
     product_id?: true
     purchase_id?: true
+    error_message?: true
+    transaction_date?: true
     _all?: true
   }
 
@@ -3032,6 +3046,8 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
     _count: OpinionRewardTransactionCountAggregateOutputType | null
     _avg: OpinionRewardTransactionAvgAggregateOutputType | null
     _sum: OpinionRewardTransactionSumAggregateOutputType | null
@@ -3059,6 +3075,8 @@ export namespace Prisma {
     email_id?: boolean
     product_id?: boolean
     purchase_id?: boolean
+    error_message?: boolean
+    transaction_date?: boolean
     user?: boolean | UserArgs
   }
 
@@ -3848,7 +3866,9 @@ export namespace Prisma {
     user_id: 'user_id',
     email_id: 'email_id',
     product_id: 'product_id',
-    purchase_id: 'purchase_id'
+    purchase_id: 'purchase_id',
+    error_message: 'error_message',
+    transaction_date: 'transaction_date'
   };
 
   export type OpinionRewardTransactionScalarFieldEnum = (typeof OpinionRewardTransactionScalarFieldEnum)[keyof typeof OpinionRewardTransactionScalarFieldEnum]
@@ -4018,6 +4038,8 @@ export namespace Prisma {
     email_id?: StringFilter | string
     product_id?: StringFilter | string
     purchase_id?: StringFilter | string
+    error_message?: StringFilter | string
+    transaction_date?: StringFilter | string
     user?: XOR<UserRelationFilter, UserWhereInput> | null
   }
 
@@ -4027,6 +4049,8 @@ export namespace Prisma {
     email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
+    error_message?: SortOrder
+    transaction_date?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -4040,6 +4064,8 @@ export namespace Prisma {
     email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
+    error_message?: SortOrder
+    transaction_date?: SortOrder
     _count?: OpinionRewardTransactionCountOrderByAggregateInput
     _avg?: OpinionRewardTransactionAvgOrderByAggregateInput
     _max?: OpinionRewardTransactionMaxOrderByAggregateInput
@@ -4056,6 +4082,8 @@ export namespace Prisma {
     email_id?: StringWithAggregatesFilter | string
     product_id?: StringWithAggregatesFilter | string
     purchase_id?: StringWithAggregatesFilter | string
+    error_message?: StringWithAggregatesFilter | string
+    transaction_date?: StringWithAggregatesFilter | string
   }
 
   export type UserCreateInput = {
@@ -4189,6 +4217,8 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
     user?: UserCreateNestedOneWithoutTransaction_detailsInput
   }
 
@@ -4198,12 +4228,16 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
   }
 
   export type OpinionRewardTransactionUpdateInput = {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneWithoutTransaction_detailsNestedInput
   }
 
@@ -4213,6 +4247,8 @@ export namespace Prisma {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
   }
 
   export type OpinionRewardTransactionCreateManyInput = {
@@ -4221,12 +4257,16 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
   }
 
   export type OpinionRewardTransactionUpdateManyMutationInput = {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
   }
 
   export type OpinionRewardTransactionUncheckedUpdateManyInput = {
@@ -4235,6 +4275,8 @@ export namespace Prisma {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter = {
@@ -4395,6 +4437,8 @@ export namespace Prisma {
     email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
+    error_message?: SortOrder
+    transaction_date?: SortOrder
   }
 
   export type OpinionRewardTransactionAvgOrderByAggregateInput = {
@@ -4408,6 +4452,8 @@ export namespace Prisma {
     email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
+    error_message?: SortOrder
+    transaction_date?: SortOrder
   }
 
   export type OpinionRewardTransactionMinOrderByAggregateInput = {
@@ -4416,6 +4462,8 @@ export namespace Prisma {
     email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
+    error_message?: SortOrder
+    transaction_date?: SortOrder
   }
 
   export type OpinionRewardTransactionSumOrderByAggregateInput = {
@@ -4634,6 +4682,8 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
   }
 
   export type OpinionRewardTransactionUncheckedCreateWithoutUserInput = {
@@ -4641,6 +4691,8 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
   }
 
   export type OpinionRewardTransactionCreateOrConnectWithoutUserInput = {
@@ -4698,6 +4750,8 @@ export namespace Prisma {
     email_id?: StringFilter | string
     product_id?: StringFilter | string
     purchase_id?: StringFilter | string
+    error_message?: StringFilter | string
+    transaction_date?: StringFilter | string
   }
 
   export type UserCreateWithoutBank_detailsInput = {
@@ -4801,12 +4855,16 @@ export namespace Prisma {
     email_id: string
     product_id: string
     purchase_id: string
+    error_message: string
+    transaction_date: string
   }
 
   export type OpinionRewardTransactionUpdateWithoutUserInput = {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
   }
 
   export type OpinionRewardTransactionUncheckedUpdateWithoutUserInput = {
@@ -4814,6 +4872,8 @@ export namespace Prisma {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
   }
 
   export type OpinionRewardTransactionUncheckedUpdateManyWithoutTransaction_detailsInput = {
@@ -4821,6 +4881,8 @@ export namespace Prisma {
     email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
+    error_message?: StringFieldUpdateOperationsInput | string
+    transaction_date?: StringFieldUpdateOperationsInput | string
   }
 
 
