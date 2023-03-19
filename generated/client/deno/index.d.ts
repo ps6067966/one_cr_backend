@@ -36,6 +36,17 @@ export type BankAccountDetails = {
   paytm_number: string
 }
 
+/**
+ * Model OpinionRewardTransaction
+ * 
+ */
+export type OpinionRewardTransaction = {
+  id: number
+  user_id: number
+  product_id: string
+  purchase_id: string
+}
+
 
 /**
  * ##  Prisma Client ʲˢ
@@ -173,6 +184,16 @@ export class PrismaClient<
     * ```
     */
   get bankAccountDetails(): Prisma.BankAccountDetailsDelegate<GlobalReject>;
+
+  /**
+   * `prisma.opinionRewardTransaction`: Exposes CRUD operations for the **OpinionRewardTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OpinionRewardTransactions
+    * const opinionRewardTransactions = await prisma.opinionRewardTransaction.findMany()
+    * ```
+    */
+  get opinionRewardTransaction(): Prisma.OpinionRewardTransactionDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -643,7 +664,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    BankAccountDetails: 'BankAccountDetails'
+    BankAccountDetails: 'BankAccountDetails',
+    OpinionRewardTransaction: 'OpinionRewardTransaction'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1018,11 +1040,13 @@ export namespace Prisma {
     photo_url?: boolean
     mobile_number?: boolean
     bank_details?: boolean | BankAccountDetailsArgs
+    transaction_details?: boolean | OpinionRewardTransactionArgs
   }
 
 
   export type UserInclude = {
     bank_details?: boolean | BankAccountDetailsArgs
+    transaction_details?: boolean | OpinionRewardTransactionArgs
   }
 
   export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
@@ -1032,12 +1056,14 @@ export namespace Prisma {
     S extends { include: any } & (UserArgs | UserFindManyArgs)
     ? User  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'bank_details' ? BankAccountDetailsGetPayload<S['include'][P]> | null :  never
+        P extends 'bank_details' ? BankAccountDetailsGetPayload<S['include'][P]> | null :
+        P extends 'transaction_details' ? OpinionRewardTransactionGetPayload<S['include'][P]> | null :  never
   } 
     : S extends { select: any } & (UserArgs | UserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'bank_details' ? BankAccountDetailsGetPayload<S['select'][P]> | null :  P extends keyof User ? User[P] : never
+        P extends 'bank_details' ? BankAccountDetailsGetPayload<S['select'][P]> | null :
+        P extends 'transaction_details' ? OpinionRewardTransactionGetPayload<S['select'][P]> | null :  P extends keyof User ? User[P] : never
   } 
       : User
 
@@ -1410,6 +1436,8 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
     bank_details<T extends BankAccountDetailsArgs= {}>(args?: Subset<T, BankAccountDetailsArgs>): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T> | Null>;
+
+    transaction_details<T extends OpinionRewardTransactionArgs= {}>(args?: Subset<T, OpinionRewardTransactionArgs>): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -2760,6 +2788,967 @@ export namespace Prisma {
 
 
   /**
+   * Model OpinionRewardTransaction
+   */
+
+
+  export type AggregateOpinionRewardTransaction = {
+    _count: OpinionRewardTransactionCountAggregateOutputType | null
+    _avg: OpinionRewardTransactionAvgAggregateOutputType | null
+    _sum: OpinionRewardTransactionSumAggregateOutputType | null
+    _min: OpinionRewardTransactionMinAggregateOutputType | null
+    _max: OpinionRewardTransactionMaxAggregateOutputType | null
+  }
+
+  export type OpinionRewardTransactionAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type OpinionRewardTransactionSumAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type OpinionRewardTransactionMinAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    product_id: string | null
+    purchase_id: string | null
+  }
+
+  export type OpinionRewardTransactionMaxAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    product_id: string | null
+    purchase_id: string | null
+  }
+
+  export type OpinionRewardTransactionCountAggregateOutputType = {
+    id: number
+    user_id: number
+    product_id: number
+    purchase_id: number
+    _all: number
+  }
+
+
+  export type OpinionRewardTransactionAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type OpinionRewardTransactionSumAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type OpinionRewardTransactionMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    product_id?: true
+    purchase_id?: true
+  }
+
+  export type OpinionRewardTransactionMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    product_id?: true
+    purchase_id?: true
+  }
+
+  export type OpinionRewardTransactionCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    product_id?: true
+    purchase_id?: true
+    _all?: true
+  }
+
+  export type OpinionRewardTransactionAggregateArgs = {
+    /**
+     * Filter which OpinionRewardTransaction to aggregate.
+     */
+    where?: OpinionRewardTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpinionRewardTransactions to fetch.
+     */
+    orderBy?: Enumerable<OpinionRewardTransactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OpinionRewardTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpinionRewardTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpinionRewardTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OpinionRewardTransactions
+    **/
+    _count?: true | OpinionRewardTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OpinionRewardTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OpinionRewardTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OpinionRewardTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OpinionRewardTransactionMaxAggregateInputType
+  }
+
+  export type GetOpinionRewardTransactionAggregateType<T extends OpinionRewardTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateOpinionRewardTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOpinionRewardTransaction[P]>
+      : GetScalarType<T[P], AggregateOpinionRewardTransaction[P]>
+  }
+
+
+
+
+  export type OpinionRewardTransactionGroupByArgs = {
+    where?: OpinionRewardTransactionWhereInput
+    orderBy?: Enumerable<OpinionRewardTransactionOrderByWithAggregationInput>
+    by: OpinionRewardTransactionScalarFieldEnum[]
+    having?: OpinionRewardTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OpinionRewardTransactionCountAggregateInputType | true
+    _avg?: OpinionRewardTransactionAvgAggregateInputType
+    _sum?: OpinionRewardTransactionSumAggregateInputType
+    _min?: OpinionRewardTransactionMinAggregateInputType
+    _max?: OpinionRewardTransactionMaxAggregateInputType
+  }
+
+
+  export type OpinionRewardTransactionGroupByOutputType = {
+    id: number
+    user_id: number
+    product_id: string
+    purchase_id: string
+    _count: OpinionRewardTransactionCountAggregateOutputType | null
+    _avg: OpinionRewardTransactionAvgAggregateOutputType | null
+    _sum: OpinionRewardTransactionSumAggregateOutputType | null
+    _min: OpinionRewardTransactionMinAggregateOutputType | null
+    _max: OpinionRewardTransactionMaxAggregateOutputType | null
+  }
+
+  type GetOpinionRewardTransactionGroupByPayload<T extends OpinionRewardTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<OpinionRewardTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OpinionRewardTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OpinionRewardTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], OpinionRewardTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OpinionRewardTransactionSelect = {
+    id?: boolean
+    user_id?: boolean
+    product_id?: boolean
+    purchase_id?: boolean
+    user?: boolean | UserArgs
+  }
+
+
+  export type OpinionRewardTransactionInclude = {
+    user?: boolean | UserArgs
+  }
+
+  export type OpinionRewardTransactionGetPayload<S extends boolean | null | undefined | OpinionRewardTransactionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? OpinionRewardTransaction :
+    S extends undefined ? never :
+    S extends { include: any } & (OpinionRewardTransactionArgs | OpinionRewardTransactionFindManyArgs)
+    ? OpinionRewardTransaction  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? UserGetPayload<S['include'][P]> | null :  never
+  } 
+    : S extends { select: any } & (OpinionRewardTransactionArgs | OpinionRewardTransactionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? UserGetPayload<S['select'][P]> | null :  P extends keyof OpinionRewardTransaction ? OpinionRewardTransaction[P] : never
+  } 
+      : OpinionRewardTransaction
+
+
+  type OpinionRewardTransactionCountArgs = 
+    Omit<OpinionRewardTransactionFindManyArgs, 'select' | 'include'> & {
+      select?: OpinionRewardTransactionCountAggregateInputType | true
+    }
+
+  export interface OpinionRewardTransactionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one OpinionRewardTransaction that matches the filter.
+     * @param {OpinionRewardTransactionFindUniqueArgs} args - Arguments to find a OpinionRewardTransaction
+     * @example
+     * // Get one OpinionRewardTransaction
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends OpinionRewardTransactionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, OpinionRewardTransactionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'OpinionRewardTransaction'> extends True ? Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>> : Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T> | null, null>
+
+    /**
+     * Find one OpinionRewardTransaction that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {OpinionRewardTransactionFindUniqueOrThrowArgs} args - Arguments to find a OpinionRewardTransaction
+     * @example
+     * // Get one OpinionRewardTransaction
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends OpinionRewardTransactionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, OpinionRewardTransactionFindUniqueOrThrowArgs>
+    ): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>>
+
+    /**
+     * Find the first OpinionRewardTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionFindFirstArgs} args - Arguments to find a OpinionRewardTransaction
+     * @example
+     * // Get one OpinionRewardTransaction
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends OpinionRewardTransactionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, OpinionRewardTransactionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'OpinionRewardTransaction'> extends True ? Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>> : Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T> | null, null>
+
+    /**
+     * Find the first OpinionRewardTransaction that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionFindFirstOrThrowArgs} args - Arguments to find a OpinionRewardTransaction
+     * @example
+     * // Get one OpinionRewardTransaction
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends OpinionRewardTransactionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, OpinionRewardTransactionFindFirstOrThrowArgs>
+    ): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>>
+
+    /**
+     * Find zero or more OpinionRewardTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OpinionRewardTransactions
+     * const opinionRewardTransactions = await prisma.opinionRewardTransaction.findMany()
+     * 
+     * // Get first 10 OpinionRewardTransactions
+     * const opinionRewardTransactions = await prisma.opinionRewardTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const opinionRewardTransactionWithIdOnly = await prisma.opinionRewardTransaction.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends OpinionRewardTransactionFindManyArgs>(
+      args?: SelectSubset<T, OpinionRewardTransactionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<OpinionRewardTransactionGetPayload<T>>>
+
+    /**
+     * Create a OpinionRewardTransaction.
+     * @param {OpinionRewardTransactionCreateArgs} args - Arguments to create a OpinionRewardTransaction.
+     * @example
+     * // Create one OpinionRewardTransaction
+     * const OpinionRewardTransaction = await prisma.opinionRewardTransaction.create({
+     *   data: {
+     *     // ... data to create a OpinionRewardTransaction
+     *   }
+     * })
+     * 
+    **/
+    create<T extends OpinionRewardTransactionCreateArgs>(
+      args: SelectSubset<T, OpinionRewardTransactionCreateArgs>
+    ): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>>
+
+    /**
+     * Create many OpinionRewardTransactions.
+     *     @param {OpinionRewardTransactionCreateManyArgs} args - Arguments to create many OpinionRewardTransactions.
+     *     @example
+     *     // Create many OpinionRewardTransactions
+     *     const opinionRewardTransaction = await prisma.opinionRewardTransaction.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends OpinionRewardTransactionCreateManyArgs>(
+      args?: SelectSubset<T, OpinionRewardTransactionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a OpinionRewardTransaction.
+     * @param {OpinionRewardTransactionDeleteArgs} args - Arguments to delete one OpinionRewardTransaction.
+     * @example
+     * // Delete one OpinionRewardTransaction
+     * const OpinionRewardTransaction = await prisma.opinionRewardTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one OpinionRewardTransaction
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends OpinionRewardTransactionDeleteArgs>(
+      args: SelectSubset<T, OpinionRewardTransactionDeleteArgs>
+    ): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>>
+
+    /**
+     * Update one OpinionRewardTransaction.
+     * @param {OpinionRewardTransactionUpdateArgs} args - Arguments to update one OpinionRewardTransaction.
+     * @example
+     * // Update one OpinionRewardTransaction
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends OpinionRewardTransactionUpdateArgs>(
+      args: SelectSubset<T, OpinionRewardTransactionUpdateArgs>
+    ): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>>
+
+    /**
+     * Delete zero or more OpinionRewardTransactions.
+     * @param {OpinionRewardTransactionDeleteManyArgs} args - Arguments to filter OpinionRewardTransactions to delete.
+     * @example
+     * // Delete a few OpinionRewardTransactions
+     * const { count } = await prisma.opinionRewardTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends OpinionRewardTransactionDeleteManyArgs>(
+      args?: SelectSubset<T, OpinionRewardTransactionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OpinionRewardTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OpinionRewardTransactions
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends OpinionRewardTransactionUpdateManyArgs>(
+      args: SelectSubset<T, OpinionRewardTransactionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OpinionRewardTransaction.
+     * @param {OpinionRewardTransactionUpsertArgs} args - Arguments to update or create a OpinionRewardTransaction.
+     * @example
+     * // Update or create a OpinionRewardTransaction
+     * const opinionRewardTransaction = await prisma.opinionRewardTransaction.upsert({
+     *   create: {
+     *     // ... data to create a OpinionRewardTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OpinionRewardTransaction we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends OpinionRewardTransactionUpsertArgs>(
+      args: SelectSubset<T, OpinionRewardTransactionUpsertArgs>
+    ): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T>>
+
+    /**
+     * Count the number of OpinionRewardTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionCountArgs} args - Arguments to filter OpinionRewardTransactions to count.
+     * @example
+     * // Count the number of OpinionRewardTransactions
+     * const count = await prisma.opinionRewardTransaction.count({
+     *   where: {
+     *     // ... the filter for the OpinionRewardTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends OpinionRewardTransactionCountArgs>(
+      args?: Subset<T, OpinionRewardTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OpinionRewardTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OpinionRewardTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OpinionRewardTransactionAggregateArgs>(args: Subset<T, OpinionRewardTransactionAggregateArgs>): Prisma.PrismaPromise<GetOpinionRewardTransactionAggregateType<T>>
+
+    /**
+     * Group by OpinionRewardTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpinionRewardTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OpinionRewardTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OpinionRewardTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: OpinionRewardTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OpinionRewardTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOpinionRewardTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OpinionRewardTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__OpinionRewardTransactionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * OpinionRewardTransaction base type for findUnique actions
+   */
+  export type OpinionRewardTransactionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * Filter, which OpinionRewardTransaction to fetch.
+     */
+    where: OpinionRewardTransactionWhereUniqueInput
+  }
+
+  /**
+   * OpinionRewardTransaction findUnique
+   */
+  export interface OpinionRewardTransactionFindUniqueArgs extends OpinionRewardTransactionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * OpinionRewardTransaction findUniqueOrThrow
+   */
+  export type OpinionRewardTransactionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * Filter, which OpinionRewardTransaction to fetch.
+     */
+    where: OpinionRewardTransactionWhereUniqueInput
+  }
+
+
+  /**
+   * OpinionRewardTransaction base type for findFirst actions
+   */
+  export type OpinionRewardTransactionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * Filter, which OpinionRewardTransaction to fetch.
+     */
+    where?: OpinionRewardTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpinionRewardTransactions to fetch.
+     */
+    orderBy?: Enumerable<OpinionRewardTransactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OpinionRewardTransactions.
+     */
+    cursor?: OpinionRewardTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpinionRewardTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpinionRewardTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OpinionRewardTransactions.
+     */
+    distinct?: Enumerable<OpinionRewardTransactionScalarFieldEnum>
+  }
+
+  /**
+   * OpinionRewardTransaction findFirst
+   */
+  export interface OpinionRewardTransactionFindFirstArgs extends OpinionRewardTransactionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * OpinionRewardTransaction findFirstOrThrow
+   */
+  export type OpinionRewardTransactionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * Filter, which OpinionRewardTransaction to fetch.
+     */
+    where?: OpinionRewardTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpinionRewardTransactions to fetch.
+     */
+    orderBy?: Enumerable<OpinionRewardTransactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OpinionRewardTransactions.
+     */
+    cursor?: OpinionRewardTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpinionRewardTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpinionRewardTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OpinionRewardTransactions.
+     */
+    distinct?: Enumerable<OpinionRewardTransactionScalarFieldEnum>
+  }
+
+
+  /**
+   * OpinionRewardTransaction findMany
+   */
+  export type OpinionRewardTransactionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * Filter, which OpinionRewardTransactions to fetch.
+     */
+    where?: OpinionRewardTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpinionRewardTransactions to fetch.
+     */
+    orderBy?: Enumerable<OpinionRewardTransactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OpinionRewardTransactions.
+     */
+    cursor?: OpinionRewardTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpinionRewardTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpinionRewardTransactions.
+     */
+    skip?: number
+    distinct?: Enumerable<OpinionRewardTransactionScalarFieldEnum>
+  }
+
+
+  /**
+   * OpinionRewardTransaction create
+   */
+  export type OpinionRewardTransactionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * The data needed to create a OpinionRewardTransaction.
+     */
+    data: XOR<OpinionRewardTransactionCreateInput, OpinionRewardTransactionUncheckedCreateInput>
+  }
+
+
+  /**
+   * OpinionRewardTransaction createMany
+   */
+  export type OpinionRewardTransactionCreateManyArgs = {
+    /**
+     * The data used to create many OpinionRewardTransactions.
+     */
+    data: Enumerable<OpinionRewardTransactionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * OpinionRewardTransaction update
+   */
+  export type OpinionRewardTransactionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * The data needed to update a OpinionRewardTransaction.
+     */
+    data: XOR<OpinionRewardTransactionUpdateInput, OpinionRewardTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which OpinionRewardTransaction to update.
+     */
+    where: OpinionRewardTransactionWhereUniqueInput
+  }
+
+
+  /**
+   * OpinionRewardTransaction updateMany
+   */
+  export type OpinionRewardTransactionUpdateManyArgs = {
+    /**
+     * The data used to update OpinionRewardTransactions.
+     */
+    data: XOR<OpinionRewardTransactionUpdateManyMutationInput, OpinionRewardTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which OpinionRewardTransactions to update
+     */
+    where?: OpinionRewardTransactionWhereInput
+  }
+
+
+  /**
+   * OpinionRewardTransaction upsert
+   */
+  export type OpinionRewardTransactionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * The filter to search for the OpinionRewardTransaction to update in case it exists.
+     */
+    where: OpinionRewardTransactionWhereUniqueInput
+    /**
+     * In case the OpinionRewardTransaction found by the `where` argument doesn't exist, create a new OpinionRewardTransaction with this data.
+     */
+    create: XOR<OpinionRewardTransactionCreateInput, OpinionRewardTransactionUncheckedCreateInput>
+    /**
+     * In case the OpinionRewardTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OpinionRewardTransactionUpdateInput, OpinionRewardTransactionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * OpinionRewardTransaction delete
+   */
+  export type OpinionRewardTransactionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    /**
+     * Filter which OpinionRewardTransaction to delete.
+     */
+    where: OpinionRewardTransactionWhereUniqueInput
+  }
+
+
+  /**
+   * OpinionRewardTransaction deleteMany
+   */
+  export type OpinionRewardTransactionDeleteManyArgs = {
+    /**
+     * Filter which OpinionRewardTransactions to delete
+     */
+    where?: OpinionRewardTransactionWhereInput
+  }
+
+
+  /**
+   * OpinionRewardTransaction without action
+   */
+  export type OpinionRewardTransactionArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -2776,6 +3765,16 @@ export namespace Prisma {
   };
 
   export type BankAccountDetailsScalarFieldEnum = (typeof BankAccountDetailsScalarFieldEnum)[keyof typeof BankAccountDetailsScalarFieldEnum]
+
+
+  export const OpinionRewardTransactionScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    product_id: 'product_id',
+    purchase_id: 'purchase_id'
+  };
+
+  export type OpinionRewardTransactionScalarFieldEnum = (typeof OpinionRewardTransactionScalarFieldEnum)[keyof typeof OpinionRewardTransactionScalarFieldEnum]
 
 
   export const QueryMode: {
@@ -2832,6 +3831,7 @@ export namespace Prisma {
     photo_url?: StringFilter | string
     mobile_number?: StringFilter | string
     bank_details?: XOR<BankAccountDetailsRelationFilter, BankAccountDetailsWhereInput> | null
+    transaction_details?: XOR<OpinionRewardTransactionRelationFilter, OpinionRewardTransactionWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -2842,6 +3842,7 @@ export namespace Prisma {
     photo_url?: SortOrder
     mobile_number?: SortOrder
     bank_details?: BankAccountDetailsOrderByWithRelationInput
+    transaction_details?: OpinionRewardTransactionOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = {
@@ -2931,6 +3932,52 @@ export namespace Prisma {
     paytm_number?: StringWithAggregatesFilter | string
   }
 
+  export type OpinionRewardTransactionWhereInput = {
+    AND?: Enumerable<OpinionRewardTransactionWhereInput>
+    OR?: Enumerable<OpinionRewardTransactionWhereInput>
+    NOT?: Enumerable<OpinionRewardTransactionWhereInput>
+    id?: IntFilter | number
+    user_id?: IntFilter | number
+    product_id?: StringFilter | string
+    purchase_id?: StringFilter | string
+    user?: XOR<UserRelationFilter, UserWhereInput> | null
+  }
+
+  export type OpinionRewardTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    product_id?: SortOrder
+    purchase_id?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type OpinionRewardTransactionWhereUniqueInput = {
+    id?: number
+    user_id?: number
+  }
+
+  export type OpinionRewardTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    product_id?: SortOrder
+    purchase_id?: SortOrder
+    _count?: OpinionRewardTransactionCountOrderByAggregateInput
+    _avg?: OpinionRewardTransactionAvgOrderByAggregateInput
+    _max?: OpinionRewardTransactionMaxOrderByAggregateInput
+    _min?: OpinionRewardTransactionMinOrderByAggregateInput
+    _sum?: OpinionRewardTransactionSumOrderByAggregateInput
+  }
+
+  export type OpinionRewardTransactionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<OpinionRewardTransactionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<OpinionRewardTransactionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<OpinionRewardTransactionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    user_id?: IntWithAggregatesFilter | number
+    product_id?: StringWithAggregatesFilter | string
+    purchase_id?: StringWithAggregatesFilter | string
+  }
+
   export type UserCreateInput = {
     user_name: string
     full_name: string
@@ -2938,6 +3985,7 @@ export namespace Prisma {
     photo_url: string
     mobile_number: string
     bank_details?: BankAccountDetailsCreateNestedOneWithoutUserInput
+    transaction_details?: OpinionRewardTransactionCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -2948,6 +3996,7 @@ export namespace Prisma {
     photo_url: string
     mobile_number: string
     bank_details?: BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput
+    transaction_details?: OpinionRewardTransactionUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -2957,6 +4006,7 @@ export namespace Prisma {
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
     bank_details?: BankAccountDetailsUpdateOneWithoutUserNestedInput
+    transaction_details?: OpinionRewardTransactionUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -2967,6 +4017,7 @@ export namespace Prisma {
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
     bank_details?: BankAccountDetailsUncheckedUpdateOneWithoutUserNestedInput
+    transaction_details?: OpinionRewardTransactionUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3054,6 +4105,51 @@ export namespace Prisma {
     paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
+  export type OpinionRewardTransactionCreateInput = {
+    product_id: string
+    purchase_id: string
+    user?: UserCreateNestedOneWithoutTransaction_detailsInput
+  }
+
+  export type OpinionRewardTransactionUncheckedCreateInput = {
+    id?: number
+    user_id: number
+    product_id: string
+    purchase_id: string
+  }
+
+  export type OpinionRewardTransactionUpdateInput = {
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneWithoutTransaction_detailsNestedInput
+  }
+
+  export type OpinionRewardTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OpinionRewardTransactionCreateManyInput = {
+    id?: number
+    user_id: number
+    product_id: string
+    purchase_id: string
+  }
+
+  export type OpinionRewardTransactionUpdateManyMutationInput = {
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OpinionRewardTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
   export type IntFilter = {
     equals?: number
     in?: Enumerable<number>
@@ -3083,6 +4179,11 @@ export namespace Prisma {
   export type BankAccountDetailsRelationFilter = {
     is?: BankAccountDetailsWhereInput | null
     isNot?: BankAccountDetailsWhereInput | null
+  }
+
+  export type OpinionRewardTransactionRelationFilter = {
+    is?: OpinionRewardTransactionWhereInput | null
+    isNot?: OpinionRewardTransactionWhereInput | null
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -3196,16 +4297,59 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
+  export type OpinionRewardTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    product_id?: SortOrder
+    purchase_id?: SortOrder
+  }
+
+  export type OpinionRewardTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type OpinionRewardTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    product_id?: SortOrder
+    purchase_id?: SortOrder
+  }
+
+  export type OpinionRewardTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    product_id?: SortOrder
+    purchase_id?: SortOrder
+  }
+
+  export type OpinionRewardTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
   export type BankAccountDetailsCreateNestedOneWithoutUserInput = {
     create?: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
     connectOrCreate?: BankAccountDetailsCreateOrConnectWithoutUserInput
     connect?: BankAccountDetailsWhereUniqueInput
   }
 
+  export type OpinionRewardTransactionCreateNestedOneWithoutUserInput = {
+    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
+    connect?: OpinionRewardTransactionWhereUniqueInput
+  }
+
   export type BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
     connectOrCreate?: BankAccountDetailsCreateOrConnectWithoutUserInput
     connect?: BankAccountDetailsWhereUniqueInput
+  }
+
+  export type OpinionRewardTransactionUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
+    connect?: OpinionRewardTransactionWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3220,6 +4364,16 @@ export namespace Prisma {
     delete?: boolean
     connect?: BankAccountDetailsWhereUniqueInput
     update?: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type OpinionRewardTransactionUpdateOneWithoutUserNestedInput = {
+    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
+    upsert?: OpinionRewardTransactionUpsertWithoutUserInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: OpinionRewardTransactionWhereUniqueInput
+    update?: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3240,6 +4394,16 @@ export namespace Prisma {
     update?: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
   }
 
+  export type OpinionRewardTransactionUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
+    upsert?: OpinionRewardTransactionUpsertWithoutUserInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: OpinionRewardTransactionWhereUniqueInput
+    update?: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
+  }
+
   export type UserCreateNestedOneWithoutBank_detailsInput = {
     create?: XOR<UserCreateWithoutBank_detailsInput, UserUncheckedCreateWithoutBank_detailsInput>
     connectOrCreate?: UserCreateOrConnectWithoutBank_detailsInput
@@ -3254,6 +4418,22 @@ export namespace Prisma {
     delete?: boolean
     connect?: UserWhereUniqueInput
     update?: XOR<UserUpdateWithoutBank_detailsInput, UserUncheckedUpdateWithoutBank_detailsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTransaction_detailsInput = {
+    create?: XOR<UserCreateWithoutTransaction_detailsInput, UserUncheckedCreateWithoutTransaction_detailsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransaction_detailsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutTransaction_detailsNestedInput = {
+    create?: XOR<UserCreateWithoutTransaction_detailsInput, UserUncheckedCreateWithoutTransaction_detailsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransaction_detailsInput
+    upsert?: UserUpsertWithoutTransaction_detailsInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutTransaction_detailsInput, UserUncheckedUpdateWithoutTransaction_detailsInput>
   }
 
   export type NestedIntFilter = {
@@ -3345,6 +4525,22 @@ export namespace Prisma {
     create: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
   }
 
+  export type OpinionRewardTransactionCreateWithoutUserInput = {
+    product_id: string
+    purchase_id: string
+  }
+
+  export type OpinionRewardTransactionUncheckedCreateWithoutUserInput = {
+    id?: number
+    product_id: string
+    purchase_id: string
+  }
+
+  export type OpinionRewardTransactionCreateOrConnectWithoutUserInput = {
+    where: OpinionRewardTransactionWhereUniqueInput
+    create: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+  }
+
   export type BankAccountDetailsUpsertWithoutUserInput = {
     update: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
     create: XOR<BankAccountDetailsCreateWithoutUserInput, BankAccountDetailsUncheckedCreateWithoutUserInput>
@@ -3365,12 +4561,29 @@ export namespace Prisma {
     paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
+  export type OpinionRewardTransactionUpsertWithoutUserInput = {
+    update: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
+    create: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type OpinionRewardTransactionUpdateWithoutUserInput = {
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OpinionRewardTransactionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserCreateWithoutBank_detailsInput = {
     user_name: string
     full_name: string
     email: string
     photo_url: string
     mobile_number: string
+    transaction_details?: OpinionRewardTransactionCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBank_detailsInput = {
@@ -3380,6 +4593,7 @@ export namespace Prisma {
     email: string
     photo_url: string
     mobile_number: string
+    transaction_details?: OpinionRewardTransactionUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBank_detailsInput = {
@@ -3398,6 +4612,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
+    transaction_details?: OpinionRewardTransactionUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBank_detailsInput = {
@@ -3407,6 +4622,55 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
+    transaction_details?: OpinionRewardTransactionUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutTransaction_detailsInput = {
+    user_name: string
+    full_name: string
+    email: string
+    photo_url: string
+    mobile_number: string
+    bank_details?: BankAccountDetailsCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTransaction_detailsInput = {
+    id?: number
+    user_name: string
+    full_name: string
+    email: string
+    photo_url: string
+    mobile_number: string
+    bank_details?: BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTransaction_detailsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTransaction_detailsInput, UserUncheckedCreateWithoutTransaction_detailsInput>
+  }
+
+  export type UserUpsertWithoutTransaction_detailsInput = {
+    update: XOR<UserUpdateWithoutTransaction_detailsInput, UserUncheckedUpdateWithoutTransaction_detailsInput>
+    create: XOR<UserCreateWithoutTransaction_detailsInput, UserUncheckedCreateWithoutTransaction_detailsInput>
+  }
+
+  export type UserUpdateWithoutTransaction_detailsInput = {
+    user_name?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+    bank_details?: BankAccountDetailsUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTransaction_detailsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_name?: StringFieldUpdateOperationsInput | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    photo_url?: StringFieldUpdateOperationsInput | string
+    mobile_number?: StringFieldUpdateOperationsInput | string
+    bank_details?: BankAccountDetailsUncheckedUpdateOneWithoutUserNestedInput
   }
 
 

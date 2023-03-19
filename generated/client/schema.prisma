@@ -20,6 +20,7 @@ model User {
   photo_url  String 
   mobile_number String
   bank_details        BankAccountDetails?
+  transaction_details       OpinionRewardTransaction?
 }
 
 model BankAccountDetails {
@@ -30,4 +31,13 @@ model BankAccountDetails {
   email     String   @unique
   upi_id  String 
   paytm_number String
+}
+
+// Transaction model
+model OpinionRewardTransaction {
+  id        Int      @id @default(autoincrement())
+  user     User?     @relation(fields: [user_id], references: [id])
+  user_id   Int    @unique
+  product_id      String
+  purchase_id     String
 }

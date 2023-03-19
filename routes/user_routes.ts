@@ -49,6 +49,22 @@ userRouter.get("/", (ctx) => {
     });
     ctx.response.body = user;
   })
+  .patch("/users/:id", async (ctx) => {
+    const { user_name, email, full_name, photo_url } = await ctx.request.body()
+      .value;
+    const user = await prisma.user.update({
+      where: {
+        id: Number(ctx.params.id),
+      },
+      data: {
+        user_name,
+        email,
+        full_name,
+        photo_url,
+      },
+    });
+    ctx.response.body = user;
+  })
   .delete("/users/:id", async (ctx) => {
     const user = await prisma.user.delete({
       where: {

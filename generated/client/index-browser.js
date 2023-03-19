@@ -98,6 +98,13 @@ exports.Prisma.BankAccountDetailsScalarFieldEnum = makeEnum({
   paytm_number: 'paytm_number'
 });
 
+exports.Prisma.OpinionRewardTransactionScalarFieldEnum = makeEnum({
+  id: 'id',
+  user_id: 'user_id',
+  product_id: 'product_id',
+  purchase_id: 'purchase_id'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -127,7 +134,8 @@ exports.Prisma.UserScalarFieldEnum = makeEnum({
 
 exports.Prisma.ModelName = makeEnum({
   User: 'User',
-  BankAccountDetails: 'BankAccountDetails'
+  BankAccountDetails: 'BankAccountDetails',
+  OpinionRewardTransaction: 'OpinionRewardTransaction'
 });
 
 /**

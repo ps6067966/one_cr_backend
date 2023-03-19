@@ -49,6 +49,24 @@ bankRouter
     });
     ctx.response.body = bank;
   })
+  .patch("/banks/:id", async (ctx) => {
+    const { email, full_name, paytm_number, upi_id, user_id } = await ctx
+      .request.body()
+      .value;
+    const bank = await prisma.bankAccountDetails.update({
+      where: {
+        id: Number(ctx.params.id),
+      },
+      data: {
+        email,
+        full_name,
+        paytm_number,
+        upi_id,
+        user_id,
+      },
+    });
+    ctx.response.body = bank;
+   })
   .delete("/banks/:id", async (ctx) => {
     const bank = await prisma.bankAccountDetails.delete({
       where: {
