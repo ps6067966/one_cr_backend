@@ -43,6 +43,7 @@ export type BankAccountDetails = {
 export type OpinionRewardTransaction = {
   id: number
   user_id: number
+  email_id: string
   product_id: string
   purchase_id: string
 }
@@ -826,6 +827,48 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+
+  export type UserCountOutputType = {
+    transaction_details: number
+  }
+
+  export type UserCountOutputTypeSelect = {
+    transaction_details?: boolean
+  }
+
+  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (UserCountOutputTypeArgs)
+    ? UserCountOutputType 
+    : S extends { select: any } & (UserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
+  } 
+      : UserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect | null
+  }
+
+
 
   /**
    * Models
@@ -1040,13 +1083,15 @@ export namespace Prisma {
     photo_url?: boolean
     mobile_number?: boolean
     bank_details?: boolean | BankAccountDetailsArgs
-    transaction_details?: boolean | OpinionRewardTransactionArgs
+    transaction_details?: boolean | User$transaction_detailsArgs
+    _count?: boolean | UserCountOutputTypeArgs
   }
 
 
   export type UserInclude = {
     bank_details?: boolean | BankAccountDetailsArgs
-    transaction_details?: boolean | OpinionRewardTransactionArgs
+    transaction_details?: boolean | User$transaction_detailsArgs
+    _count?: boolean | UserCountOutputTypeArgs
   }
 
   export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
@@ -1057,13 +1102,15 @@ export namespace Prisma {
     ? User  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'bank_details' ? BankAccountDetailsGetPayload<S['include'][P]> | null :
-        P extends 'transaction_details' ? OpinionRewardTransactionGetPayload<S['include'][P]> | null :  never
+        P extends 'transaction_details' ? Array < OpinionRewardTransactionGetPayload<S['include'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (UserArgs | UserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'bank_details' ? BankAccountDetailsGetPayload<S['select'][P]> | null :
-        P extends 'transaction_details' ? OpinionRewardTransactionGetPayload<S['select'][P]> | null :  P extends keyof User ? User[P] : never
+        P extends 'transaction_details' ? Array < OpinionRewardTransactionGetPayload<S['select'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
   } 
       : User
 
@@ -1437,7 +1484,7 @@ export namespace Prisma {
 
     bank_details<T extends BankAccountDetailsArgs= {}>(args?: Subset<T, BankAccountDetailsArgs>): Prisma__BankAccountDetailsClient<BankAccountDetailsGetPayload<T> | Null>;
 
-    transaction_details<T extends OpinionRewardTransactionArgs= {}>(args?: Subset<T, OpinionRewardTransactionArgs>): Prisma__OpinionRewardTransactionClient<OpinionRewardTransactionGetPayload<T> | Null>;
+    transaction_details<T extends User$transaction_detailsArgs= {}>(args?: Subset<T, User$transaction_detailsArgs>): Prisma.PrismaPromise<Array<OpinionRewardTransactionGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -1791,6 +1838,27 @@ export namespace Prisma {
      * Filter which Users to delete
      */
     where?: UserWhereInput
+  }
+
+
+  /**
+   * User.transaction_details
+   */
+  export type User$transaction_detailsArgs = {
+    /**
+     * Select specific fields to fetch from the OpinionRewardTransaction
+     */
+    select?: OpinionRewardTransactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OpinionRewardTransactionInclude | null
+    where?: OpinionRewardTransactionWhereInput
+    orderBy?: Enumerable<OpinionRewardTransactionOrderByWithRelationInput>
+    cursor?: OpinionRewardTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<OpinionRewardTransactionScalarFieldEnum>
   }
 
 
@@ -2813,6 +2881,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionMinAggregateOutputType = {
     id: number | null
     user_id: number | null
+    email_id: string | null
     product_id: string | null
     purchase_id: string | null
   }
@@ -2820,6 +2889,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionMaxAggregateOutputType = {
     id: number | null
     user_id: number | null
+    email_id: string | null
     product_id: string | null
     purchase_id: string | null
   }
@@ -2827,6 +2897,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionCountAggregateOutputType = {
     id: number
     user_id: number
+    email_id: number
     product_id: number
     purchase_id: number
     _all: number
@@ -2846,6 +2917,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionMinAggregateInputType = {
     id?: true
     user_id?: true
+    email_id?: true
     product_id?: true
     purchase_id?: true
   }
@@ -2853,6 +2925,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionMaxAggregateInputType = {
     id?: true
     user_id?: true
+    email_id?: true
     product_id?: true
     purchase_id?: true
   }
@@ -2860,6 +2933,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionCountAggregateInputType = {
     id?: true
     user_id?: true
+    email_id?: true
     product_id?: true
     purchase_id?: true
     _all?: true
@@ -2955,6 +3029,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionGroupByOutputType = {
     id: number
     user_id: number
+    email_id: string
     product_id: string
     purchase_id: string
     _count: OpinionRewardTransactionCountAggregateOutputType | null
@@ -2981,6 +3056,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionSelect = {
     id?: boolean
     user_id?: boolean
+    email_id?: boolean
     product_id?: boolean
     purchase_id?: boolean
     user?: boolean | UserArgs
@@ -3770,6 +3846,7 @@ export namespace Prisma {
   export const OpinionRewardTransactionScalarFieldEnum: {
     id: 'id',
     user_id: 'user_id',
+    email_id: 'email_id',
     product_id: 'product_id',
     purchase_id: 'purchase_id'
   };
@@ -3831,7 +3908,7 @@ export namespace Prisma {
     photo_url?: StringFilter | string
     mobile_number?: StringFilter | string
     bank_details?: XOR<BankAccountDetailsRelationFilter, BankAccountDetailsWhereInput> | null
-    transaction_details?: XOR<OpinionRewardTransactionRelationFilter, OpinionRewardTransactionWhereInput> | null
+    transaction_details?: OpinionRewardTransactionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3842,7 +3919,7 @@ export namespace Prisma {
     photo_url?: SortOrder
     mobile_number?: SortOrder
     bank_details?: BankAccountDetailsOrderByWithRelationInput
-    transaction_details?: OpinionRewardTransactionOrderByWithRelationInput
+    transaction_details?: OpinionRewardTransactionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = {
@@ -3938,6 +4015,7 @@ export namespace Prisma {
     NOT?: Enumerable<OpinionRewardTransactionWhereInput>
     id?: IntFilter | number
     user_id?: IntFilter | number
+    email_id?: StringFilter | string
     product_id?: StringFilter | string
     purchase_id?: StringFilter | string
     user?: XOR<UserRelationFilter, UserWhereInput> | null
@@ -3946,6 +4024,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
+    email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -3953,12 +4032,12 @@ export namespace Prisma {
 
   export type OpinionRewardTransactionWhereUniqueInput = {
     id?: number
-    user_id?: number
   }
 
   export type OpinionRewardTransactionOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
+    email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
     _count?: OpinionRewardTransactionCountOrderByAggregateInput
@@ -3974,6 +4053,7 @@ export namespace Prisma {
     NOT?: Enumerable<OpinionRewardTransactionScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     user_id?: IntWithAggregatesFilter | number
+    email_id?: StringWithAggregatesFilter | string
     product_id?: StringWithAggregatesFilter | string
     purchase_id?: StringWithAggregatesFilter | string
   }
@@ -3985,7 +4065,7 @@ export namespace Prisma {
     photo_url: string
     mobile_number: string
     bank_details?: BankAccountDetailsCreateNestedOneWithoutUserInput
-    transaction_details?: OpinionRewardTransactionCreateNestedOneWithoutUserInput
+    transaction_details?: OpinionRewardTransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3996,7 +4076,7 @@ export namespace Prisma {
     photo_url: string
     mobile_number: string
     bank_details?: BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput
-    transaction_details?: OpinionRewardTransactionUncheckedCreateNestedOneWithoutUserInput
+    transaction_details?: OpinionRewardTransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4006,7 +4086,7 @@ export namespace Prisma {
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
     bank_details?: BankAccountDetailsUpdateOneWithoutUserNestedInput
-    transaction_details?: OpinionRewardTransactionUpdateOneWithoutUserNestedInput
+    transaction_details?: OpinionRewardTransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4017,7 +4097,7 @@ export namespace Prisma {
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
     bank_details?: BankAccountDetailsUncheckedUpdateOneWithoutUserNestedInput
-    transaction_details?: OpinionRewardTransactionUncheckedUpdateOneWithoutUserNestedInput
+    transaction_details?: OpinionRewardTransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4106,6 +4186,7 @@ export namespace Prisma {
   }
 
   export type OpinionRewardTransactionCreateInput = {
+    email_id: string
     product_id: string
     purchase_id: string
     user?: UserCreateNestedOneWithoutTransaction_detailsInput
@@ -4114,11 +4195,13 @@ export namespace Prisma {
   export type OpinionRewardTransactionUncheckedCreateInput = {
     id?: number
     user_id: number
+    email_id: string
     product_id: string
     purchase_id: string
   }
 
   export type OpinionRewardTransactionUpdateInput = {
+    email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneWithoutTransaction_detailsNestedInput
@@ -4127,6 +4210,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
   }
@@ -4134,11 +4218,13 @@ export namespace Prisma {
   export type OpinionRewardTransactionCreateManyInput = {
     id?: number
     user_id: number
+    email_id: string
     product_id: string
     purchase_id: string
   }
 
   export type OpinionRewardTransactionUpdateManyMutationInput = {
+    email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
   }
@@ -4146,6 +4232,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
+    email_id?: StringFieldUpdateOperationsInput | string
     product_id?: StringFieldUpdateOperationsInput | string
     purchase_id?: StringFieldUpdateOperationsInput | string
   }
@@ -4181,9 +4268,14 @@ export namespace Prisma {
     isNot?: BankAccountDetailsWhereInput | null
   }
 
-  export type OpinionRewardTransactionRelationFilter = {
-    is?: OpinionRewardTransactionWhereInput | null
-    isNot?: OpinionRewardTransactionWhereInput | null
+  export type OpinionRewardTransactionListRelationFilter = {
+    every?: OpinionRewardTransactionWhereInput
+    some?: OpinionRewardTransactionWhereInput
+    none?: OpinionRewardTransactionWhereInput
+  }
+
+  export type OpinionRewardTransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -4300,6 +4392,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionCountOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
   }
@@ -4312,6 +4405,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionMaxOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
   }
@@ -4319,6 +4413,7 @@ export namespace Prisma {
   export type OpinionRewardTransactionMinOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
+    email_id?: SortOrder
     product_id?: SortOrder
     purchase_id?: SortOrder
   }
@@ -4334,10 +4429,11 @@ export namespace Prisma {
     connect?: BankAccountDetailsWhereUniqueInput
   }
 
-  export type OpinionRewardTransactionCreateNestedOneWithoutUserInput = {
-    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
-    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
-    connect?: OpinionRewardTransactionWhereUniqueInput
+  export type OpinionRewardTransactionCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<OpinionRewardTransactionCreateWithoutUserInput>, Enumerable<OpinionRewardTransactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<OpinionRewardTransactionCreateOrConnectWithoutUserInput>
+    createMany?: OpinionRewardTransactionCreateManyUserInputEnvelope
+    connect?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
   }
 
   export type BankAccountDetailsUncheckedCreateNestedOneWithoutUserInput = {
@@ -4346,10 +4442,11 @@ export namespace Prisma {
     connect?: BankAccountDetailsWhereUniqueInput
   }
 
-  export type OpinionRewardTransactionUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
-    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
-    connect?: OpinionRewardTransactionWhereUniqueInput
+  export type OpinionRewardTransactionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<OpinionRewardTransactionCreateWithoutUserInput>, Enumerable<OpinionRewardTransactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<OpinionRewardTransactionCreateOrConnectWithoutUserInput>
+    createMany?: OpinionRewardTransactionCreateManyUserInputEnvelope
+    connect?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4366,14 +4463,18 @@ export namespace Prisma {
     update?: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
   }
 
-  export type OpinionRewardTransactionUpdateOneWithoutUserNestedInput = {
-    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
-    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
-    upsert?: OpinionRewardTransactionUpsertWithoutUserInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: OpinionRewardTransactionWhereUniqueInput
-    update?: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
+  export type OpinionRewardTransactionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<OpinionRewardTransactionCreateWithoutUserInput>, Enumerable<OpinionRewardTransactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<OpinionRewardTransactionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<OpinionRewardTransactionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: OpinionRewardTransactionCreateManyUserInputEnvelope
+    set?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    disconnect?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    delete?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    connect?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    update?: Enumerable<OpinionRewardTransactionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<OpinionRewardTransactionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<OpinionRewardTransactionScalarWhereInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -4394,14 +4495,18 @@ export namespace Prisma {
     update?: XOR<BankAccountDetailsUpdateWithoutUserInput, BankAccountDetailsUncheckedUpdateWithoutUserInput>
   }
 
-  export type OpinionRewardTransactionUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
-    connectOrCreate?: OpinionRewardTransactionCreateOrConnectWithoutUserInput
-    upsert?: OpinionRewardTransactionUpsertWithoutUserInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: OpinionRewardTransactionWhereUniqueInput
-    update?: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
+  export type OpinionRewardTransactionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<OpinionRewardTransactionCreateWithoutUserInput>, Enumerable<OpinionRewardTransactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<OpinionRewardTransactionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<OpinionRewardTransactionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: OpinionRewardTransactionCreateManyUserInputEnvelope
+    set?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    disconnect?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    delete?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    connect?: Enumerable<OpinionRewardTransactionWhereUniqueInput>
+    update?: Enumerable<OpinionRewardTransactionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<OpinionRewardTransactionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<OpinionRewardTransactionScalarWhereInput>
   }
 
   export type UserCreateNestedOneWithoutBank_detailsInput = {
@@ -4526,12 +4631,14 @@ export namespace Prisma {
   }
 
   export type OpinionRewardTransactionCreateWithoutUserInput = {
+    email_id: string
     product_id: string
     purchase_id: string
   }
 
   export type OpinionRewardTransactionUncheckedCreateWithoutUserInput = {
     id?: number
+    email_id: string
     product_id: string
     purchase_id: string
   }
@@ -4539,6 +4646,11 @@ export namespace Prisma {
   export type OpinionRewardTransactionCreateOrConnectWithoutUserInput = {
     where: OpinionRewardTransactionWhereUniqueInput
     create: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type OpinionRewardTransactionCreateManyUserInputEnvelope = {
+    data: Enumerable<OpinionRewardTransactionCreateManyUserInput>
+    skipDuplicates?: boolean
   }
 
   export type BankAccountDetailsUpsertWithoutUserInput = {
@@ -4561,20 +4673,31 @@ export namespace Prisma {
     paytm_number?: StringFieldUpdateOperationsInput | string
   }
 
-  export type OpinionRewardTransactionUpsertWithoutUserInput = {
+  export type OpinionRewardTransactionUpsertWithWhereUniqueWithoutUserInput = {
+    where: OpinionRewardTransactionWhereUniqueInput
     update: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
     create: XOR<OpinionRewardTransactionCreateWithoutUserInput, OpinionRewardTransactionUncheckedCreateWithoutUserInput>
   }
 
-  export type OpinionRewardTransactionUpdateWithoutUserInput = {
-    product_id?: StringFieldUpdateOperationsInput | string
-    purchase_id?: StringFieldUpdateOperationsInput | string
+  export type OpinionRewardTransactionUpdateWithWhereUniqueWithoutUserInput = {
+    where: OpinionRewardTransactionWhereUniqueInput
+    data: XOR<OpinionRewardTransactionUpdateWithoutUserInput, OpinionRewardTransactionUncheckedUpdateWithoutUserInput>
   }
 
-  export type OpinionRewardTransactionUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    product_id?: StringFieldUpdateOperationsInput | string
-    purchase_id?: StringFieldUpdateOperationsInput | string
+  export type OpinionRewardTransactionUpdateManyWithWhereWithoutUserInput = {
+    where: OpinionRewardTransactionScalarWhereInput
+    data: XOR<OpinionRewardTransactionUpdateManyMutationInput, OpinionRewardTransactionUncheckedUpdateManyWithoutTransaction_detailsInput>
+  }
+
+  export type OpinionRewardTransactionScalarWhereInput = {
+    AND?: Enumerable<OpinionRewardTransactionScalarWhereInput>
+    OR?: Enumerable<OpinionRewardTransactionScalarWhereInput>
+    NOT?: Enumerable<OpinionRewardTransactionScalarWhereInput>
+    id?: IntFilter | number
+    user_id?: IntFilter | number
+    email_id?: StringFilter | string
+    product_id?: StringFilter | string
+    purchase_id?: StringFilter | string
   }
 
   export type UserCreateWithoutBank_detailsInput = {
@@ -4583,7 +4706,7 @@ export namespace Prisma {
     email: string
     photo_url: string
     mobile_number: string
-    transaction_details?: OpinionRewardTransactionCreateNestedOneWithoutUserInput
+    transaction_details?: OpinionRewardTransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBank_detailsInput = {
@@ -4593,7 +4716,7 @@ export namespace Prisma {
     email: string
     photo_url: string
     mobile_number: string
-    transaction_details?: OpinionRewardTransactionUncheckedCreateNestedOneWithoutUserInput
+    transaction_details?: OpinionRewardTransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBank_detailsInput = {
@@ -4612,7 +4735,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
-    transaction_details?: OpinionRewardTransactionUpdateOneWithoutUserNestedInput
+    transaction_details?: OpinionRewardTransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBank_detailsInput = {
@@ -4622,7 +4745,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
-    transaction_details?: OpinionRewardTransactionUncheckedUpdateOneWithoutUserNestedInput
+    transaction_details?: OpinionRewardTransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutTransaction_detailsInput = {
@@ -4671,6 +4794,33 @@ export namespace Prisma {
     photo_url?: StringFieldUpdateOperationsInput | string
     mobile_number?: StringFieldUpdateOperationsInput | string
     bank_details?: BankAccountDetailsUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type OpinionRewardTransactionCreateManyUserInput = {
+    id?: number
+    email_id: string
+    product_id: string
+    purchase_id: string
+  }
+
+  export type OpinionRewardTransactionUpdateWithoutUserInput = {
+    email_id?: StringFieldUpdateOperationsInput | string
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OpinionRewardTransactionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email_id?: StringFieldUpdateOperationsInput | string
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type OpinionRewardTransactionUncheckedUpdateManyWithoutTransaction_detailsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email_id?: StringFieldUpdateOperationsInput | string
+    product_id?: StringFieldUpdateOperationsInput | string
+    purchase_id?: StringFieldUpdateOperationsInput | string
   }
 
 

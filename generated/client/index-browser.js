@@ -101,6 +101,7 @@ exports.Prisma.BankAccountDetailsScalarFieldEnum = makeEnum({
 exports.Prisma.OpinionRewardTransactionScalarFieldEnum = makeEnum({
   id: 'id',
   user_id: 'user_id',
+  email_id: 'email_id',
   product_id: 'product_id',
   purchase_id: 'purchase_id'
 });
